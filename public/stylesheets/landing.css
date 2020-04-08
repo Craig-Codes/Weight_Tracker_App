@@ -1,0 +1,204 @@
+body {
+  background-color: rgb(197, 198, 199);
+  font-family: "Lato", serif;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 10vh;
+}
+
+p {
+  margin-top: 20px;
+  margin-bottom: 0px;
+}
+
+.card-img-top {
+  position: absolute;
+  top: -72px;
+  left: 50%;
+  margin-left: -74px;
+  width: 150px !important;
+  height: 150px;
+  padding: 20px;
+}
+
+form {
+  width: 100%;
+}
+
+.card {
+  background-color: white;
+  margin-top: 30px;
+  padding-top: 30px;
+  -webkit-box-shadow: 0px 10px 23px -8px rgba(0, 0, 0, 0.45);
+  -moz-box-shadow: 0px 10px 23px -8px rgba(0, 0, 0, 0.45);
+  box-shadow: 0px 10px 23px -8px rgba(0, 0, 0, 0.45);
+}
+
+.card-block {
+  width: 100%;
+}
+
+.card-text {
+  color: white;
+}
+
+.card-img-top {
+  background-color: rgb(197, 198, 199);
+}
+
+.row {
+  margin-top: 6vh;
+  margin-bottom: 50px;
+}
+
+.card-block {
+  padding-top: 60px;
+}
+.card-columns {
+  column-count: 8;
+}
+
+.dumbell {
+  animation: spinner 0.5s linear 1;
+}
+
+@-moz-keyframes spinner {
+  100% {
+    -moz-transform: rotate(180deg);
+  }
+}
+@-webkit-keyframes spinner {
+  100% {
+    -webkit-transform: rotate(180deg);
+  }
+}
+@keyframes spinner {
+  100% {
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+  }
+}
+
+.dumbell-left {
+  animation: spinner-left 0.5s linear 1;
+}
+
+@-moz-keyframes spinner-left {
+  100% {
+    -moz-transform: rotate(-180deg);
+  }
+}
+@-webkit-keyframes spinner-left {
+  100% {
+    -webkit-transform: rotate(-180deg);
+  }
+}
+@keyframes spinner-left {
+  100% {
+    -webkit-transform: rotate(-180deg);
+    transform: rotate(-180deg);
+  }
+}
+
+.middle-push {
+  padding-left: 20%;
+  padding-right: 20%;
+}
+
+#custom-form {
+  padding: 25px 15%;
+}
+
+.faded-out {
+  color: lightgray;
+  border-bottom: 3px solid lightgray;
+  cursor: pointer;
+  padding-bottom: 3px;
+}
+
+.selected {
+  color: black;
+  border-bottom: 3px solid black;
+  cursor: pointer;
+  padding-bottom: 3px;
+}
+
+.form-control:focus {
+  border-color: #6c757d;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 0, 0, 0.6);
+}
+
+.inline {
+  display: inline;
+  margin-bottom: 5px;
+}
+
+.male {
+  margin-left: 5px;
+  margin-right: 0px;
+}
+
+.female {
+  margin-left: 20%;
+  margin-right: 5px;
+}
+
+.foot {
+  margin-left: 0px;
+  margin-right: 5px;
+}
+
+.inches {
+  margin-left: 15%;
+  margin-right: 5px;
+}
+
+.lbs {
+  margin-right: 5px;
+}
+
+#lbs {
+  border-radius: 10%;
+}
+
+#foot {
+  border-radius: 10%;
+}
+
+#inches {
+  border-radius: 10%;
+}
+
+/* Pre-loader */
+.loader,
+.loader:after {
+  width: 10%;
+  height: auto;
+  justify-content: center;
+  align-self: center;
+  margin-left: auto;
+  margin-right: auto;
+  animation: rotation 3s infinite linear;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+#loadingDiv {
+  position: absolute;
+  display: flex;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(197, 198, 199);
+}

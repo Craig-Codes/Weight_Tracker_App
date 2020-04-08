@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Lato"
+    />
+    <link rel="stylesheet" href="/stylesheets/landing.css" />
+    <link rel="icon" type="image/png" href="/images/favicon.jpg" />
+    <title>Weight Tracker</title>
+  </head>
+  <body>
+    <h1>Weight Tracker App</h1>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-2"></div>
+
+        <div class="col-8">
+          <div class="row text-center">
+            <div class="card w-100">
+              <img
+                class="card-img-top img-circle rounded-circle"
+                src="/images/barbell.png"
+                alt="Card image cap"
+                id="dumbell"
+              />
+              <div class="card-block">
+                <h4 class="card-title">
+                  <span id="login" class="selected">Login</span>
+                  <span class="middle-push"></span>
+                  <span id="register" class="faded-out">Register</span>
+                </h4>
+              </div>
+              <form id="custom-form" action="/" method="POST">
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="InputUsername"
+                    placeholder="&#xf007; Username"
+                    style="font-family: Arial, FontAwesome;"
+                  />
+                </div>
+                <div class="form-group">
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="InputPassword"
+                    placeholder="&#xf023; Password"
+                    style="font-family: Arial, FontAwesome;"
+                  />
+                </div>
+                <button class="btn btn-secondary">
+                  Submit
+                </button>
+                <div>
+                  <p>Forgotten password?</p>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-2"></div>
+      </div>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script src="/js/landing.js"></script>
+  </body>
+</html>

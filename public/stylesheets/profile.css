@@ -1,0 +1,51 @@
+body {
+  background-color: rgb(197, 198, 199);
+  font-family: "Lato", serif;
+}
+
+i {
+  color: white;
+}
+
+.navbar {
+  padding: 10px 16px;
+}
+
+.nav-link {
+  padding: 0 16px;
+}
+
+.container {
+  padding-top: 30px;
+}
+
+.fa {
+  font-size: 1.5em;
+}
+
+.raised-block {
+  background-color: #fff;
+  margin-bottom: 10px;
+  margin-left: 0;
+  margin-right: -0.625rem;
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
+  margin-bottom: 1.5rem;
+  -webkit-box-shadow: 0px 10px 23px -8px rgba(0, 0, 0, 0.45);
+  -moz-box-shadow: 0px 10px 23px -8px rgba(0, 0, 0, 0.45);
+  box-shadow: 0px 10px 23px -8px rgba(0, 0, 0, 0.45);
+  height: 300px;
+}
+@media (max-width: 33.9em) {
+  .raised-block {
+    margin-left: -0.625rem;
+  }
+}
+
+.fa-sign-out {
+  margin-top: 7px;
+}
+
+.fa-cog{
+    margin-top: 7px; 
+}
