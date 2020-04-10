@@ -50,3 +50,26 @@ i {
 .fa-cog {
   margin-top: 7px;
 }
+
+#bmiScore{
+  top: 0;
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center
+}
+
+.circleBase {
+  border-radius: 50%;
+}
+
+.contact-circle {
+  position: relative;
+  width: 40%;
+  height: auto;
+  padding-top: 40%;
+}

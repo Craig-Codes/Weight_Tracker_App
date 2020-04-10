@@ -13,13 +13,13 @@
       <div class="raised-block">
         <h3>BMI</h3>
         <p>your weight is: <%=currentUser.weight%></p>
-        <p>
-          your height is: <%=currentUser.heightFt%>'<%=currentUser.heightIn%>lbs
-
-          your bmi is: <%=bmi%>
-        </p>
-
+        your height is: <%=currentUser.heightFt%>'<%=currentUser.heightIn%>lbs
+        your bmi is:
+        <div class="circleBase contact-circle" style="background-color: <%=color%>;">
+          <div id="bmiScore"><%=bmi%></div>
+        </div>
       </div>
+
     </div>
     <div class="col-md-12">
       <div class="raised-block">

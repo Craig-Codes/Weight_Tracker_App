@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router(); // new isntance of the express router... all routes are added to it, then its exported.
 const passport = require("passport");
 const User = require("../models/user");
+const profileFunctions = require("../public/js/profile");
 
 const bmiCalc = 24;
 // AUTH ROUTES - Register
@@ -25,7 +26,7 @@ router.post("/register", function (req, res) {
     }
     console.log("db user =====", user);
     passport.authenticate("local")(req, res, function () {
-      res.render("profile", { currentUser: req.user });
+      res.redirect("/profile");
     });
   });
 });
@@ -61,8 +62,9 @@ router.get("/", function (req, res) {
 
 //INDEX Route
 router.get("/profile", isLoggedIn, function (req, res) {
-  let bmi = 24;
-  res.render("profile", { currentUser: req.user, bmi: bmi });
+  let bmi = profileFunctions.bmi(req.user.weight, req.user.heightFt, req.user.heightIn, req.user.age); // send user details to BMI calc function
+  let color = profileFunctions.bmiColor(bmi);
+  res.render("profile", { currentUser: req.user, bmi: bmi, color: color });
 });
 
 // NEW Route
