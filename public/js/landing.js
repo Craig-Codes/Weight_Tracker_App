@@ -23,6 +23,7 @@ loginBtn.addEventListener("click", () => {
   setTimeout(function () {
     dumbellImg.className = "card-img-top img-circle rounded-circle dumbell";
   }, 100);
+  myForm.action = "/login";
   myForm.innerHTML =
     '<div class="form-group">' +
     '<input type="text" class="form-control" id="InputUsername" placeholder="&#xf007; Username" style="font-family: Arial, FontAwesome;" /></div>' +
@@ -40,16 +41,17 @@ registerBtn.addEventListener("click", () => {
     dumbellImg.className =
       "card-img-top img-circle rounded-circle dumbell-left";
   }, 100);
+  myForm.action = "/register";
   myForm.innerHTML =
-    '<form id="custom-form" action="/" method="POST">' +
+    '<form id="custom-form" action="/register" method="POST">' +
     '<div class="form-group">' +
-    '<input type="text" class="form-control" id="InputUsername" placeholder="&#xf007; Username" style="font-family: Arial, FontAwesome;" required/></div>' +
+    '<input type="text" class="form-control" id="InputUsername" placeholder="&#xf007; Username" name="username" style="font-family: Arial, FontAwesome;" required/></div>' +
     '<div class="form-group">' +
-    '<input type="password" class="form-control" id="InputPassword" placeholder="&#xf023; Password" style="font-family: Arial, FontAwesome;" required /></div>' +
+    '<input type="password" class="form-control" id="InputPassword" placeholder="&#xf023; Password" name="password" style="font-family: Arial, FontAwesome;" required /></div>' +
     '<div class="form-group">' +
-    '<input type="password" class="form-control" id="InputPassword" placeholder="&#xf084; Confirm password" style="font-family: Arial, FontAwesome;" required /></div>' +
+    '<input type="password" class="form-control" id="ConfirmPassword" placeholder="&#xf084; Confirm password" name="passwordCheck" style="font-family: Arial, FontAwesome;" required /></div>' +
     '<div class="form-group">' +
-    '<input type="number" min="1" max="99" class="form-control" id="InputAge" placeholder="&#xf073; Age" style="font-family: Arial, FontAwesome;"  required/></div>' +
+    '<input type="number" min="1" max="99" class="form-control" id="InputAge" placeholder="&#xf073; Age" name="age" style="font-family: Arial, FontAwesome;"  required/></div>' +
     '<div class="form-group">' +
     '<label for="male">Male</label>' +
     '<input type="radio" id="male" class="male" name="gender" value="male" required>' +
@@ -57,11 +59,11 @@ registerBtn.addEventListener("click", () => {
     '<input type="radio" id="female" name="gender" value="female"></div>' +
     '<div class="form-group">' +
     '<label for="feet" class="foot">Foot:</label>' +
-    '<input type="number" id="foot" name="foot" min="0" max="7" required>' +
+    '<input type="number" id="InputFoot" name="heightFt" min="0" max="7" required>' +
     '<label for="inches" class="inches">Inches:</label>' +
-    '<input type="number" id="inches" name="inches" min="0" max="11" required></div>' +
+    '<input type="number" id="InputInches" name="heightIn" min="0" max="11" required></div>' +
     '<div class="form-group">' +
     '<label for="lbs" class="lbs">Lbs:</label>' +
-    '<input type="number" id="lbs" name="lbs" min="50" max="500" required></div>' +
+    '<input type="number" id="InputLbs" name="weight" min="50" max="500" required></div>' +
     '<button type="submit" class="btn btn-secondary">Sign Up</button></form>';
 });

@@ -49,12 +49,13 @@
                   <span id="register" class="faded-out">Register</span>
                 </h4>
               </div>
-              <form id="custom-form" action="/" method="POST">
+              <form id="custom-form" action="/login" method="post">
                 <div class="form-group">
                   <input
                     type="text"
                     class="form-control"
-                    id="InputUsername"
+                    id="username"
+                    name="username"
                     placeholder="&#xf007; Username"
                     style="font-family: Arial, FontAwesome;"
                   />
@@ -63,7 +64,8 @@
                   <input
                     type="password"
                     class="form-control"
-                    id="InputPassword"
+                    id="password"
+                    name="password"
                     placeholder="&#xf023; Password"
                     style="font-family: Arial, FontAwesome;"
                   />

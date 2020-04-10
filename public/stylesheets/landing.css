@@ -49,8 +49,8 @@ form {
 }
 
 .row {
-  margin-top: 6vh;
-  margin-bottom: 50px;
+  margin-top: 4vh;
+  margin-bottom: 20px;
 }
 
 .card-block {
@@ -103,8 +103,8 @@ form {
 }
 
 .middle-push {
-  padding-left: 20%;
-  padding-right: 20%;
+  padding-left: 10%;
+  padding-right: 10%;
 }
 
 #custom-form {
@@ -132,7 +132,6 @@ form {
 
 .inline {
   display: inline;
-  margin-bottom: 5px;
 }
 
 .male {

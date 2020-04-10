@@ -27,9 +27,11 @@
     <title>Weight Tracker</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand navbar-dark bg-dark"> <!-- add in navbar-expand-sm for burger menu if needed-->
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
+      <!-- add in navbar-expand-sm for burger menu if needed-->
       <a class="navbar-brand mb-0 h1" href="#"
-        ><i class="fa fa-male" aria-hidden="true"></i>&ensp; Hello 'Name'</a
+        ><i class="fa fa-<%=currentUser.gender%>" aria-hidden="true"></i>&ensp;
+        Hello <%=currentUser.username%></a
       >
       <button
         class="navbar-toggler"
@@ -61,7 +63,7 @@
             ></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/">
+            <a class="nav-link" href="/logout">
               <i class="fa fa-sign-out" aria-hidden="true"></i
             ></a>
           </li>
