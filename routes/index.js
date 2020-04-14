@@ -64,7 +64,10 @@ router.get("/", function (req, res) {
 router.get("/profile", middleware.isLoggedIn, function (req, res) {
   let bmi = profileFunctions.bmi(req.user.weight, req.user.heightFt, req.user.heightIn, req.user.age); // send user details to BMI calc function
   let color = profileFunctions.bmiColor(bmi);
-  res.render("profile", { currentUser: req.user, bmi: bmi, color: color });
+  let weights = profileFunctions.weightShow(req.user.username);
+  console.log("weights from index", weights);
+  console.log("weights first entry varaible from index.js", weights[0].weight);
+  res.render("profile", { currentUser: req.user, bmi: bmi, color: color, weights: weights });
 });
 
 // NEW Route

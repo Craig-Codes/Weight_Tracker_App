@@ -25,28 +25,11 @@ router.post("/profile", middleware.isLoggedIn, function (req, res) {
         }
         else {
             console.log(result);
+            console.log(result.weights)
             res.redirect("/profile");
         }
     });
 
-    // User.findById(req.user._id, function (err, user) {
-    //     if (err) {
-    //         console.log(err);
-    //         res.redirect("/profile");
-    //     } else {
-    //         // console.log(user);
-    //         console.log(user.weight);
-    //         console.log(user.weights);
-    //         // user.weights.push({
-    //         user.weight = req.body.weight;
-    //         user.weights.unshift(user.weight);
-    //         console.log(user.weight);
-    //         //     date: Date.now(),
-    //         // });
-    //         user.save();
-    //         res.redirect("/profile");
-    //     }
-    // });
 });
 
 module.exports = router; // export the router paths

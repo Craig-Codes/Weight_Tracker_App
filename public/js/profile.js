@@ -1,3 +1,8 @@
+const User = require("../../models/user");
+const express = require("express");
+const router = express.Router();
+const moment = require('moment');
+
 function bmi(weight, heightFt, heightIn) {
     let userHeightFtToIn = heightFt * 12;
     let userHeightIn = userHeightFtToIn + heightIn;
@@ -22,7 +27,35 @@ function bmiColor(bmi) {
     return color;
 }
 
+let revArr = []; //Global so that the variable is visible outside
+function weightShow(username) {
+    User.findOne({ "username": username }, function (err, result) {
+        if (err) {
+            console.log(err);
+        }
+        else { // Create a new array of objects without the id property
+            let weightsArray = [];
+
+            let resultsArray = result.weights;
+            resultsArray.forEach(function (entry) {
+                let objectToPush = {
+                    weight: entry.weight,
+                    date: moment(entry.date).format("DD-MM-YYYY"),
+                }
+                weightsArray.push(objectToPush);
+            })
+            revArr = weightsArray.reverse();
+            console.log("======================", revArr);
+            console.log(revArr[0]);
+            console.log("revArray before return ====", revArr[0]);
+        }
+    });
+    console.log("revArray before return ====", revArr[0]);
+    return revArr;
+}
+
 module.exports = {
     bmi: bmi, // add in any other functions here
     bmiColor: bmiColor,
+    weightShow: weightShow,
 }

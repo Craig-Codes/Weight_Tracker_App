@@ -12,11 +12,14 @@
               <button class="btn btn-outline-dark fa-button"><i class="fa fa-plus" aria-hidden="true"></i></button>
             </div>
           </form>
-
         </div>
-        <p>you are this old gender: <%=currentUser.gender%></p>
-        <p>your weight is: <%=currentUser.weight%></p>
-        your height is: <%=currentUser.heightFt%>'<%=currentUser.heightIn%>lbs
+        <ul>
+          <% for(var i=0; i<5; i++) {%>
+          <!-- only show 5 in the list on profile page, show all on show page -->
+          <li><%= JSON.stringify(weights[i].weight) %>lbs at <%= JSON.parse(JSON.stringify(weights[i].date)) %></li>
+          <% } %>
+        </ul>
+
         <div class="text-center">
           <a href="https://www.nhs.uk/common-health-questions/lifestyle/what-is-the-body-mass-index-bmi/"
             target="_blank"><button class="btn btn-outline-dark">View All</button></a>
@@ -54,6 +57,9 @@
     <div class="col-md-12">
       <div class="raised-block">
         <h3>Graph</h3>
+        <p>you are this old gender: <%=currentUser.gender%></p>
+        <p>your weight is: <%=currentUser.weight%></p>
+        your height is: <%=currentUser.heightFt%>'<%=currentUser.heightIn%>lbs
       </div>
     </div>
   </div>
