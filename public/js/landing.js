@@ -51,7 +51,7 @@ registerBtn.addEventListener("click", () => {
     '<div class="form-group">' +
     '<input type="password" class="form-control" id="ConfirmPassword" placeholder="&#xf084; Confirm password" name="passwordCheck" style="font-family: Arial, FontAwesome;" required /></div>' +
     '<div class="form-group">' +
-    '<input type="number" min="1" max="99" class="form-control" id="InputAge" placeholder="&#xf073; Age" name="age" style="font-family: Arial, FontAwesome;"  required/></div>' +
+    '<input type="number" min="18" max="99" class="form-control" id="InputAge" placeholder="&#xf073; Age" name="age" style="font-family: Arial, FontAwesome;"  required/></div>' +
     '<div class="form-group">' +
     '<label for="male">Male</label>' +
     '<input type="radio" id="male" class="male" name="gender" value="male" required>' +

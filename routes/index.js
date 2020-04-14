@@ -3,8 +3,8 @@ const router = express.Router(); // new isntance of the express router... all ro
 const passport = require("passport");
 const User = require("../models/user");
 const profileFunctions = require("../public/js/profile");
+const middleware = require("../middleware"); // because the middleware file is called index.js, we dont need to explicityl put / index.js at the end as express will look here by default
 
-const bmiCalc = 24;
 // AUTH ROUTES - Register
 
 // Post from the register form. handles Sign-up logic
@@ -61,30 +61,21 @@ router.get("/", function (req, res) {
 });
 
 //INDEX Route
-router.get("/profile", isLoggedIn, function (req, res) {
+router.get("/profile", middleware.isLoggedIn, function (req, res) {
   let bmi = profileFunctions.bmi(req.user.weight, req.user.heightFt, req.user.heightIn, req.user.age); // send user details to BMI calc function
   let color = profileFunctions.bmiColor(bmi);
   res.render("profile", { currentUser: req.user, bmi: bmi, color: color });
 });
 
 // NEW Route
-//router.get("/profile/new", function (req, res) {
-//////res.render("new", { currentUser: req.user });
-//});
+// router.get("/profile/new", function (req, res) {
+//   res.render("new", { currentUser: req.user });
+// });
 
 //CREATE Route
 //router.post("/profile", function (req, res) {
 //create weight
 //res.redirect("/profile", { currentUser: req.user });
 //});
-
-// Middlewear
-//Checks to see if a user is logged in, if not kicks them back to the login screen - stops errors where user becomes undefined on page refresh
-function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect("/");
-}
 
 module.exports = router; // export the router paths

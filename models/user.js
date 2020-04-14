@@ -5,7 +5,6 @@ const mongoose = require("mongoose"),
 var weightSchema = new mongoose.Schema({
   weight: Number,
   date: Date,
-  comment: String,
 });
 
 // Main Schema

@@ -5,18 +5,48 @@
     <div class="col-md-6">
       <div class="raised-block">
         <h3>Weight List</h3>
-        <p>you are this old gender: <%=currentUser.gender%></p>
+        <div class="text-center">
+          <form id="custom-form" action="/profile" method="post">
+            <div class="form-group">
+              <input type="number" id="InputLbs" name="weight" min="50" max="500" placeholder=" weight in lbs" required>
+              <button class="btn btn-outline-dark fa-button"><i class="fa fa-plus" aria-hidden="true"></i></button>
+            </div>
+          </form>
 
+        </div>
+        <p>you are this old gender: <%=currentUser.gender%></p>
+        <p>your weight is: <%=currentUser.weight%></p>
+        your height is: <%=currentUser.heightFt%>'<%=currentUser.heightIn%>lbs
+        <div class="text-center">
+          <a href="https://www.nhs.uk/common-health-questions/lifestyle/what-is-the-body-mass-index-bmi/"
+            target="_blank"><button class="btn btn-outline-dark">View All</button></a>
+        </div>
       </div>
+
     </div>
     <div class="col-md-6">
       <div class="raised-block">
-        <h3>BMI</h3>
-        <p>your weight is: <%=currentUser.weight%></p>
-        your height is: <%=currentUser.heightFt%>'<%=currentUser.heightIn%>lbs
-        your bmi is:
-        <div class="circleBase contact-circle" style="background-color: <%=color%>;">
-          <div id="bmiScore"><%=bmi%></div>
+        <h3>Body Mass Index</h3>
+        <div class="row">
+          <div class="col-5">
+
+            <div class="circleBase contact-circle" style="background-color: <%=color%>;">
+              <div id="bmiScore">
+                <%=bmi%>
+              </div>
+            </div>
+          </div>
+          <div class="col-7">
+            <p>Less than 18.5 = Underweight<br>
+              Between 18.5 - 24.9 = Healthy Weight<br>
+              Between 25 - 29.9 = Overweight<br>
+              Over 30 = Obese</p>
+            <div class="text-center">
+              <a href="https://www.nhs.uk/common-health-questions/lifestyle/what-is-the-body-mass-index-bmi/"
+                target="_blank"><button class="btn btn-outline-dark">BMI Information</button></a>
+            </div>
+
+          </div>
         </div>
       </div>
 

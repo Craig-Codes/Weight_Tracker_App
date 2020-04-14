@@ -1,74 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <!-- Bootstrap CSS -->
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-      crossorigin="anonymous"
-    />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Lato"
-    />
-    <link rel="stylesheet" href="/stylesheets/profile.css" />
-    <link rel="icon" type="image/png" href="/images/favicon.jpg" />
-    <title>Weight Tracker</title>
-  </head>
-  <body>
-    <nav class="navbar navbar-expand navbar-dark bg-dark">
-      <!-- add in navbar-expand-sm for burger menu if needed-->
-      <a class="navbar-brand mb-0 h1" href="#"
-        ><i class="fa fa-<%=currentUser.gender%>" aria-hidden="true"></i>&ensp;
-        Hello <%=currentUser.username%></a
-      >
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarText"
-        aria-controls="navbarText"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              href="https://ca-gym-finder.netlify.com/"
-              target="_blank"
-            >
-              <button type="button" class="btn btn-outline-light">
-                Find Local Gyms
-              </button>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="fa fa-cog" aria-hidden="true"></i
-            ></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/logout">
-              <i class="fa fa-sign-out" aria-hidden="true"></i
-            ></a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </body>
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" />
+  <link rel="stylesheet" href="/stylesheets/profile.css" />
+  <link rel="icon" type="image/png" href="/images/favicon.jpg" />
+  <title>Weight Tracker</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand navbar-dark bg-dark">
+    <!-- add in navbar-expand-sm for burger menu if needed-->
+    <a class="navbar-brand mb-0 h1" href="/profile"><i class="fa fa-<%=currentUser.gender%>"
+        aria-hidden="true"></i>&ensp;
+      Hello <%=currentUser.username%></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+      aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="https://ca-gym-finder.netlify.com/" target="_blank">
+            <button type="button" class="btn btn-outline-light">
+              Find Local Gyms
+            </button>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="fa fa-cog" aria-hidden="true"></i></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">
+            <i class="fa fa-sign-out" aria-hidden="true"></i></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</body>
+
 </html>

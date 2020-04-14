@@ -52,7 +52,10 @@ passport.serializeUser(User.serializeUser()); // methods required to take data f
 passport.deserializeUser(User.deserializeUser());
 
 // ROUTE SETUP
+const weightsRoutes = require("./routes/weights");
 const indexRoutes = require("./routes/index"); // require the index routes
+
+app.use(weightsRoutes);
 app.use(indexRoutes);
 
 app.get("/test", function (req, res) {
