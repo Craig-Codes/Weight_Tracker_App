@@ -32,4 +32,8 @@ router.post("/profile", middleware.isLoggedIn, function (req, res) {
 
 });
 
+router.get("/profile/weights", middleware.isLoggedIn, function (req, res) {
+    res.send("weights index route reached");
+})
+
 module.exports = router; // export the router paths

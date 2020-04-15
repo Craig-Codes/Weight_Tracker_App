@@ -1,3 +1,5 @@
+const profileFunctions = require("../public/js/profile");
+
 const middlewareObj = {}
 
 middlewareObj.isLoggedIn = function (req, res, next) {

@@ -67,7 +67,7 @@ app.use(function (req, res, next) {
   // pass our req.user to every single template --> MIDDLEWARE
   res.locals.currentUser = req.user; //currentUser variable can now be used in all templates - will be empty if no one logged in.
   //res.locals.error = req.flash("error"); // passes the 'message' varaible into every template... necessary as flash messages are in the header of every template so avoids message is undefined errors
-  //res.locals.success = req.flash("success");
+  //res.locals.success = req.flash("success")
   next(); // need to move middlewear on
 });
 

@@ -8,7 +8,7 @@ i {
 }
 
 h3{
-  padding-top: 5px;
+  padding-top: 10px;
 }
 
 .navbar {
@@ -38,7 +38,7 @@ h3{
   -webkit-box-shadow: 0px 10px 23px -8px rgba(0, 0, 0, 0.45);
   -moz-box-shadow: 0px 10px 23px -8px rgba(0, 0, 0, 0.45);
   box-shadow: 0px 10px 23px -8px rgba(0, 0, 0, 0.45);
-  height: 300px;
+  height: 320px;
   border-radius: 5px;
   transition: 0.2s ease-out;
   -webkit-transition: 0.2s ease-out;
@@ -152,4 +152,27 @@ button{
 
 .fa-button:hover .fa-plus{
 color: white;
+}
+
+.weights-list{
+  list-style-type: none;
+  width: 100%;
+  text-align: center;
+  padding: 0;
+}
+
+.weights-list-item{
+  padding-bottom: 5px;
+}
+
+.fa-pencil-square-o{
+  color:#343a40;
+  font-size: 1rem;
+  margin-left: 10px;
+}
+
+.fa-trash-o{
+  color:#343a40;
+  font-size: 1rem;
+  margin-left: 5px;
 }

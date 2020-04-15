@@ -4,7 +4,7 @@
   <div class="row">
     <div class="col-md-6">
       <div class="raised-block">
-        <h3>Weight List</h3>
+        <h3>Weight History</h3>
         <div class="text-center">
           <form id="custom-form" action="/profile" method="post">
             <div class="form-group">
@@ -13,16 +13,18 @@
             </div>
           </form>
         </div>
-        <ul>
+        <ul class="weights-list">
           <% for(var i=0; i<5; i++) {%>
-          <!-- only show 5 in the list on profile page, show all on show page -->
-          <li><%= JSON.stringify(weights[i].weight) %>lbs at <%= JSON.parse(JSON.stringify(weights[i].date)) %></li>
+          <% if(typeof weights[i] == "undefined"){ %><p> Add more weights to populate the list</p><%break } else{%>
+          <li class="weights-list-item"><%= JSON.stringify(weights[i].weight) %>lbs on
+            <%= JSON.parse(JSON.stringify(weights[i].date)) %> <i class="fa fa-pencil-square-o" aria-hidden="true">
+            </i> <i class="fa fa-trash-o" aria-hidden="true"></i></li>
+          <% } %>
           <% } %>
         </ul>
 
         <div class="text-center">
-          <a href="https://www.nhs.uk/common-health-questions/lifestyle/what-is-the-body-mass-index-bmi/"
-            target="_blank"><button class="btn btn-outline-dark">View All</button></a>
+          <a href="/profile/weights"><button class="btn btn-outline-dark">View All</button></a>
         </div>
       </div>
 
