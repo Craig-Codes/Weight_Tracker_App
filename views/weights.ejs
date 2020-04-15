@@ -1,0 +1,31 @@
+<%- include("partials/header") %>
+<link rel="stylesheet" href="/stylesheets/weightsShow.css" />
+<div class="container">
+    <div class="row text-center">
+        <div class="col-12">
+            <div class="block">
+                <h3>Weight History Full</h3>
+                <div class="text-center">
+                    <ul class="weights-list">
+                        <% for(var i=0; i<weights.length; i++) {%>
+                        <% if(typeof weights[i] == "undefined"){ %><p> Add more weights to populate the list</p>
+                        <%break } else{%>
+                        <li class="weights-list-item"><%= JSON.stringify(weights[i].weight) %>lbs on
+                            <%= JSON.parse(JSON.stringify(weights[i].date)) %>
+                            <a href="weights/<%= weights[i].id %>/edit"><i class="fa fa-pencil-square-o"
+                                    aria-hidden="true"></i></a>
+                            <i class="fa fa-trash-o" aria-hidden="true"></i></li>
+                        <% } %>
+                        <% } %>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+
+
+        <%- include("partials/footer") %>
