@@ -5,12 +5,17 @@ const User = require("../models/user");
 const profileFunctions = require("../public/js/profile");
 const middleware = require("../middleware"); // because the middleware file is called index.js, we dont need to explicityl put / index.js at the end as express will look here by default
 const moment = require('moment');
+const Weight = require("../models/weights");
 
 // AUTH ROUTES - Register
 
 // Post from the register form. handles Sign-up logic
 router.post("/register", function (req, res) {
-  console.log("register reached");
+  if (req.body.password !== req.body.passwordCheck) {
+    return res.render("login_register");
+    console.log("password doesn't match");
+  }
+  // Create new user
   let newUser = new User({
     username: req.body.username,
     age: req.body.age,
@@ -23,12 +28,33 @@ router.post("/register", function (req, res) {
   User.register(newUser, req.body.password, function (err, user) {
     if (err) {
       console.log(err);
-      return res.render("login_register");
+      return res.redirect("/");
     }
-    console.log("db user =====", user);
-    passport.authenticate("local")(req, res, function () {
-      res.redirect("/profile");
+    // Create new weight for the user
+    Weight.create({ weight: req.body.weight, date: Date.now() }, function (err, newlyCreatedWeight) {
+      if (err) {
+        console.log(err);
+      } else {
+        newlyCreatedWeight.save(function (err) {
+          console.log("weight saved into user");
+          user.weights.push(newlyCreatedWeight)
+          user.save(function (err) {
+            console.log("new user created!");
+            console.log("should render now");
+            // Authenticate user so they can sign straight in
+            req.login(user, function (err) {
+              if (err) {
+                console.log(err);
+              }
+              else {
+                return res.redirect("/profile");
+              }
+            })
+          });
+        });
+      }
     });
+
   });
 });
 
@@ -56,66 +82,53 @@ router.get("/logout", function (req, res) {
   res.redirect("/");
 });
 
-// Root path - app landing page (Login / Register form)
-router.get("/", function (req, res) {
-  res.render("login_register"); // render the landing.ejs page. Always put ejs files inside the View directory as this is where express looks!
-});
-
-//INDEX Route
+//INDEX Route -> get user stats for bmi, and a list of weights from weights array
 router.get("/profile", middleware.isLoggedIn, function (req, res) {
-  let bmi = profileFunctions.bmi(req.user.weight, req.user.heightFt, req.user.heightIn, req.user.age); // send user details to BMI calc function
-  let color = profileFunctions.bmiColor(bmi);
-
-  //let weights = profileFunctions.weightShow(req.user.username);
-  //console.log(weights);
-  // console.log("weights first entry varaible from index.js", weights[0].weight);
-  // PUT THIS INSIDE MONGO QUERY PROMISE!!!
-
-  let weightsArray = []; // stores mongodb query result from the find.
-  let query = [
-    User.findOne({ "username": req.user.username }, function (err, result) {
-      if (err) {
-        console.log(err);
-      } // result is returned as a promise obejct from a mongodb find. Passed as 'result' to the promise
-    })
-  ];
-
-  Promise.all(query).then(result => {
-    //console.log("result[0].weights ====", result[0].weights);
-    let resultsArray = result[0].weights;
+  console.log("profile route hit");
+  User.findById(req.user.id).populate("weights").exec(function (err, foundUser) {
+    let weightsArray = [];
+    let resultsArray = [];
+    let revArray = [];
+    if (err) {
+      console.log(err);
+      return res.redirect("back");
+    }
+    if (foundUser.weights[0] == null) {
+      foundUser.weights[0].weight = 50;
+    }
+    console.log("foundUser populated ======", foundUser);
+    resultsArray = foundUser.weights;
+    console.log("resultsArray ==== ", resultsArray);
     resultsArray.forEach(function (entry) {
       let objectToPush = {
         id: entry.id,
         weight: entry.weight,
         date: moment(entry.date).format("lll") // using moment.js to format date output
       };
+      //   //console.log("weights array ====== ", weightsArray);
       weightsArray.push(objectToPush); // Creating new array objects with required key value pairs.
+      revArr = weightsArray.reverse(); // reversing the array so that new entries appear first
+      console.log("Reversed array ====== ", revArr);
+
     })
-  }).then(() => {
-    let revArr = weightsArray.reverse(); // reversing the array so that new entries appear first
-    console.log("Weights array reversed ======================", revArr);
+    console.log("populated weights array ====== ", weightsArray);
+    // let revArr = weightsArray.reverse(); // reversing the array so that new entries appear first
+    // console.log("Reversed array ====== ", revArr);
+    let bmi = profileFunctions.bmi(revArr[0].weight, req.user.heightFt, req.user.heightIn); // send user details to BMI calc function
+    let color = profileFunctions.bmiColor(bmi);
     res.render("profile", { currentUser: req.user, bmi: bmi, color: color, weights: revArr }); // pass variables into template
-  }).catch(err => {
-    console.error('Error fetching data:', err)
   });
 });
 
+//NEW Route
+router.get("/profile/new", function (req, res) {
+  res.render("new", { currentUser: req.user });
+});
 
 
-// <!--<% for(var i=0; i<5; i++) {%> -->
-//   <!-- only show 5 in the list on profile page, show all on show page -->
-//   <!--<li><%= JSON.stringify(weights[i].weight) %>lbs at <%= JSON.parse(JSON.stringify(weights[i].date)) %></li> -->
-//   <!--<% } %> -->
-
-// NEW Route
-// router.get("/profile/new", function (req, res) {
-//   res.render("new", { currentUser: req.user });
-// });
-
-//CREATE Route
-//router.post("/profile", function (req, res) {
-//create weight
-//res.redirect("/profile", { currentUser: req.user });
-//});
+// Root path - app landing page (Login / Register form)
+router.get("/", function (req, res) {
+  res.render("login_register"); // render the landing.ejs page. Always put ejs files inside the View directory as this is where express looks!
+});
 
 module.exports = router; // export the router paths

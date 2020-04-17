@@ -5,8 +5,10 @@ const express = require("express"),
   passport = require("passport"),
   LocalStrategy = require("passport-local"),
   bodyParser = require("body-parser"),
+  methodOverride = require("method-override"),
   passportLocalMongoose = require("passport-local-mongoose"),
-  User = require("./models/user");
+  User = require("./models/user"),
+  Weight = require("./models/weights");
 
 // DB SETUP
 mongoose.set("useUnifiedTopology", true);
@@ -30,6 +32,7 @@ mongoose.set("useFindAndModify", false);
 
 // APP SETUP
 app.use(bodyParser.urlencoded({ extended: true })); // tells app to use bodyParser for post requests, and sets some setting up
+app.use(methodOverride("_method")); // need for PUT Requests - hmtl forms only actually support get and post, but REST conventions require a PUT on update
 app.set("view engine", "ejs"); // This line means the express now expects ejs template files by default, so we dont need to add .ejs e.g landing.ejs can be called simply landing
 app.use(express.static(__dirname + "/public")); // adding custom stylesheet - use __dirname to ensure the directory is always correct incase it changes for whatever reason - this serves the style public directory, but you still need to link to it in the header file!
 //seedDB(); // Seeds the Database everytime this file is run... comment out for persistant data

@@ -75,3 +75,16 @@ User.find({ username: "pecan" }, function (err, user) {
     console.log(user);
   }
 });
+
+
+        <ul class="weights-list">
+          <% for(var i=0; i<5; i++) {%>
+          <% if(typeof weights[i] == "undefined"){ %><p> Add more weights to populate the list</p><%break } else{%>
+          <li class="weights-list-item"><%= JSON.stringify(weights[i].weight) %>lbs on
+            <%= JSON.parse(JSON.stringify(weights[i].date)) %>
+            <a href="/profile/weights/<%= weights[i].id %>/edit"><i class="fa fa-pencil-square-o"
+                aria-hidden="true"></i></a>
+            </i> <i class="fa fa-trash-o" aria-hidden="true"></i></li>
+          <% } %>
+          <% } %>
+        </ul>

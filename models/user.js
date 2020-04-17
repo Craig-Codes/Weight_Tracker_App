@@ -1,24 +1,23 @@
 const mongoose = require("mongoose"),
   passportLocalMongoose = require("passport-local-mongoose");
 
-//Embedded Schema
-var weightSchema = new mongoose.Schema({
-  weight: Number,
-  date: Date,
-});
-
-// Main Schema
-var userSchema = new mongoose.Schema({
+// Main User Schema
+let userSchema = new mongoose.Schema({
   username: String,
   password: String,
   age: Number,
   gender: String,
   heightFt: Number,
   heightIn: Number,
-  weight: Number,
-  weights: [weightSchema], // array of weight input data
+  weights: [{ //Weights added here
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Weight"
+  }
+  ], // array of weight input data
 });
 
 userSchema.plugin(passportLocalMongoose);
 
-module.exports = mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema);
+
+module.exports = User;

@@ -121,7 +121,6 @@ h3{
 
 button{
   text-align: center;
-  margin-right: 10px;
   margin-left: 10px;
 }
 
@@ -144,15 +143,19 @@ button{
 .fa-plus{
   vertical-align: middle;
   color: #343a40;
-  animation: 0.2 ease-in;
-  -moz-animation: 0.2 ease-in;
-  -webkit-animation: 0.2 ease-in;
+  animation: colorSwap 0.2 ease-in;
+  -moz-animation: colorSwap 0.2 ease-in;
+  -webkit-animation: colorSwap 0.2 ease-in;
 }
 
 
 .fa-button:hover .fa-plus{
 color: white;
+animation: colorSwap 0.2 ease-in;
+-moz-animation: colorSwap 0.2 ease-in;
+-webkit-animation: colorSwap 0.2 ease-in;
 }
+
 
 .weights-list{
   list-style-type: none;
