@@ -27,6 +27,22 @@ h3{
   font-size: 1.5em;
 }
 
+.trash-can{
+  font-family: FontAwesome;
+  background-color: rgba(180, 21, 21, 0);
+  border: none;
+  font-size: 1rem;
+}
+
+.trash-can:hover{
+  color:rgba(219, 35, 35, 0.767);
+}
+
+.custom-btn{
+  display:inline;
+
+}
+
 .raised-block {
   background-color: #fff;
   margin-bottom: 10px;
@@ -60,6 +76,16 @@ h3{
   -moz-transform: scale(1.02);
   transform: scale(1.02);
 }
+
+#list{
+  padding: 0;
+}
+
+#list h3{
+  padding-left: 0.625rem;;
+}
+
+
 @media (max-width: 33.9em) {
   .raised-block {
     margin-left: -0.625rem;
@@ -162,10 +188,12 @@ animation: colorSwap 0.2 ease-in;
   width: 100%;
   text-align: center;
   padding: 0;
+  margin-bottom: 5px;
 }
 
 .weights-list-item{
-  padding-bottom: 5px;
+  padding-bottom: 2px;
+  padding-top: 2px;
 }
 
 .fa-pencil-square-o{
@@ -174,8 +202,19 @@ animation: colorSwap 0.2 ease-in;
   margin-left: 10px;
 }
 
-.fa-trash-o{
-  color:#343a40;
-  font-size: 1rem;
-  margin-left: 5px;
+.fa-pencil-square-o:hover{
+  color:rgba(226, 131, 23, 0.993);
+}
+
+.weights-list-item:hover{
+  background:rgba(202, 201, 199, 0.295);
+  width: 100%;
+}
+
+#muted{
+  color: grey;
+}
+
+#bold{
+ font-weight: bold;
 }

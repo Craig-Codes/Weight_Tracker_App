@@ -1,0 +1,24 @@
+<%- include("partials/header") %>
+<link rel="stylesheet" href="/stylesheets/weightsShow.css" />
+<div class="container">
+    <div class="row text-center">
+        <div class="col-12">
+            <div class="block">
+                <h3>Edit Profile</h3>
+                <form class="ui form" action="/profile?_method=PUT" method="POST">
+                    <!-- PUT / DELTE request doesnt work in HTML5 forms!! we ned to add in ?_method=PUT and use method overide package in express to get around this. Could just send to a different route, but the  it wouldnt follow REST convention. HMTL forms only support get or post requests so most frameworks ahve. todeal with this!-->
+                <div class="form-group">
+                    <label for="age" class="foot">Age:</label>
+                    <input type="number" min="18" max="99" id="InputAge" placeholder="<%= currentUser.age%>" name="age" required/>
+                </div>
+                <div class="form-group">
+                    <label for="feet" class="foot">Foot:</label>
+                    <input type="number" id="InputFoot" name="heightFt" min="0" max="7" placeholder="<%= currentUser.heightFt %>" required>
+                    <label for="inches" class="inches">Inches:</label>
+                    <input type="number" id="InputInches" name="heightIn" min="0" max="11" placeholder="<%= currentUser.heightIn %>"required>
+                </div>
+                    <input class="btn btn-outline-dark" type="submit" value="Update">
+                </form>
+            </div>
+        </div>
+        <%- include("partials/footer") %>

@@ -64,6 +64,6 @@ registerBtn.addEventListener("click", () => {
     '<input type="number" id="InputInches" name="heightIn" min="0" max="11" required></div>' +
     '<div class="form-group">' +
     '<label for="lbs" class="lbs">Lbs:</label>' +
-    '<input type="number" id="InputLbs" name="weight" min="50" max="500" required></div>' +
-    '<button type="submit" class="btn btn-secondary">Sign Up</button></form>';
+    '<input type="number" id="InputLbs" name="weight" min="1" max="1000" step=".1" required></div>' +
+    '<button type="submit" class="btn btn-dark">Sign Up</button></form>';
 });

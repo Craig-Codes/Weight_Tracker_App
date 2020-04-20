@@ -8,14 +8,13 @@ const moment = require('moment');
 const Weight = require("../models/weights");
 
 // AUTH ROUTES - Register
-
 // Post from the register form. handles Sign-up logic
 router.post("/register", function (req, res) {
   if (req.body.password !== req.body.passwordCheck) {
     return res.render("login_register");
     console.log("password doesn't match");
   }
-  // Create new user
+  // Create new user object then pass into register function
   let newUser = new User({
     username: req.body.username,
     age: req.body.age,
@@ -24,24 +23,25 @@ router.post("/register", function (req, res) {
     heightIn: req.body.heightIn,
     weight: req.body.weight,
   });
-  console.log("new user =====", newUser);
   User.register(newUser, req.body.password, function (err, user) {
     if (err) {
       console.log(err);
       return res.redirect("/");
     }
-    // Create new weight for the user
+    // Create new weight for the user, utilisng the Weights Schema
     Weight.create({ weight: req.body.weight, date: Date.now() }, function (err, newlyCreatedWeight) {
       if (err) {
         console.log(err);
       } else {
         newlyCreatedWeight.save(function (err) {
           console.log("weight saved into user");
+          // Push new weight object into the users weights object array
           user.weights.push(newlyCreatedWeight)
+          // Save the User object with the weight inside
           user.save(function (err) {
             console.log("new user created!");
             console.log("should render now");
-            // Authenticate user so they can sign straight in
+            // Authenticate user so they are already signed in, saving the need to login straight away
             req.login(user, function (err) {
               if (err) {
                 console.log(err);
@@ -54,13 +54,13 @@ router.post("/register", function (req, res) {
         });
       }
     });
-
   });
 });
 
 // AUTH ROUTES - Login
 router.post(
   "/login",
+  // Authenticate using passport.js
   passport.authenticate("local", {
     successRedirect: "/profile", //Throw in an error message saying user name or p/w incorrect
     failureRedirect: "/",
@@ -68,7 +68,6 @@ router.post(
   function (req, res) {
     console.log("logged in");
     res.redirect("/profile");
-    console.log(currentUser);
   }
 );
 
@@ -82,7 +81,7 @@ router.get("/logout", function (req, res) {
   res.redirect("/");
 });
 
-//INDEX Route -> get user stats for bmi, and a list of weights from weights array
+//INDEX Route -> gets user stats for BMI, and a list of the most recent 5 weights for the user
 router.get("/profile", middleware.isLoggedIn, function (req, res) {
   console.log("profile route hit");
   User.findById(req.user.id).populate("weights").exec(function (err, foundUser) {
@@ -93,28 +92,24 @@ router.get("/profile", middleware.isLoggedIn, function (req, res) {
       console.log(err);
       return res.redirect("back");
     }
-    if (foundUser.weights[0] == null) {
-      foundUser.weights[0].weight = 50;
-    }
-    console.log("foundUser populated ======", foundUser);
     resultsArray = foundUser.weights;
-    console.log("resultsArray ==== ", resultsArray);
+    // loops through the users weights object array, passing the results into an object
     resultsArray.forEach(function (entry) {
       let objectToPush = {
         id: entry.id,
         weight: entry.weight,
         date: moment(entry.date).format("lll") // using moment.js to format date output
       };
-      //   //console.log("weights array ====== ", weightsArray);
-      weightsArray.push(objectToPush); // Creating new array objects with required key value pairs.
-      revArr = weightsArray.reverse(); // reversing the array so that new entries appear first
-      console.log("Reversed array ====== ", revArr);
-
+      // pass the formatted object into a new array, storing all found objects correctly formatted
+      weightsArray.push(objectToPush);
     })
-    console.log("populated weights array ====== ", weightsArray);
-    // let revArr = weightsArray.reverse(); // reversing the array so that new entries appear first
-    // console.log("Reversed array ====== ", revArr);
-    let bmi = profileFunctions.bmi(revArr[0].weight, req.user.heightFt, req.user.heightIn); // send user details to BMI calc function
+    // Reverse the array so that the most recent entries become the first entries, allowing a for loop to be used in the template to display 5 most recent weights
+    revArr = weightsArray.reverse();
+    console.log("reverseArray ===== ", revArr);
+    //console.log("reverseArray ===== ", revArr[0].weight);
+    let firstWeight = revArr[0].weight;
+    // function expressions used to calculate the BMI, and to control BMI output
+    let bmi = profileFunctions.bmi(firstWeight, req.user.heightFt, req.user.heightIn); // send user details to BMI calc function
     let color = profileFunctions.bmiColor(bmi);
     res.render("profile", { currentUser: req.user, bmi: bmi, color: color, weights: revArr }); // pass variables into template
   });
