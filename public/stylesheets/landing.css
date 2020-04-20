@@ -201,3 +201,20 @@ form {
   height: 100%;
   background-color: rgb(197, 198, 199);
 }
+
+a{
+  color: grey;
+}
+
+a:hover{
+  color: #444;
+  text-decoration: none;
+}
+
+#reset-link{
+  margin: 20px 0;
+}
+
+.non-selectable{
+  cursor: default;
+}

@@ -29,8 +29,8 @@ loginBtn.addEventListener("click", () => {
     '<input type="text" class="form-control" id="InputUsername" placeholder="&#xf007; Username" style="font-family: Arial, FontAwesome;" /></div>' +
     '<div class="form-group">' +
     '<input type="password" class="form-control" id="InputPassword" placeholder="&#xf023; Password" style="font-family: Arial, FontAwesome;" /></div>' +
-    '<button type="submit" class="btn btn-secondary">Sign In</button>' +
-    "<div><p>Forgotten password?</p></div></form>";
+    '<button type="submit" class="btn btn-dark">Sign In</button>' +
+    '<div id="reset-link"><a href="/reset">Change password / Forgotten password</a></div>';
 });
 
 registerBtn.addEventListener("click", () => {
@@ -50,6 +50,8 @@ registerBtn.addEventListener("click", () => {
     '<input type="password" class="form-control" id="InputPassword" placeholder="&#xf023; Password" name="password" style="font-family: Arial, FontAwesome;" required /></div>' +
     '<div class="form-group">' +
     '<input type="password" class="form-control" id="ConfirmPassword" placeholder="&#xf084; Confirm password" name="passwordCheck" style="font-family: Arial, FontAwesome;" required /></div>' +
+    '<div class="form-group">' +
+    '<input type="email" class="form-control" id="email" placeholder="&#xf003; Email address" name="email" style="font-family: Arial, FontAwesome;" required /></div>' +
     '<div class="form-group">' +
     '<input type="number" min="18" max="99" class="form-control" id="InputAge" placeholder="&#xf073; Age" name="age" style="font-family: Arial, FontAwesome;"  required/></div>' +
     '<div class="form-group">' +

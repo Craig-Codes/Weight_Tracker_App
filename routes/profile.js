@@ -12,8 +12,8 @@ router.get("/profile/edit", middleware.isLoggedIn, function (req, res) {
 
 // PROFILE UPDATE ROUTE
 router.put("/profile", middleware.isLoggedIn, function (req, res) {
-    User.findByIdAndUpdate({ _id: req.user.id }, { age: req.body.age, heightFt: req.body.heightFt, heightIn: req.body.heightIn },
-        function (err, newWeight) {
+    User.findByIdAndUpdate({ _id: req.user.id }, { age: req.body.age, heightFt: req.body.heightFt, heightIn: req.body.heightIn, email: req.body.email },
+        function (err, updatedUser) {
             if (err) {
                 res.redirect("back");
             } else {

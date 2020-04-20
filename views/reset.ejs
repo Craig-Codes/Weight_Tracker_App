@@ -29,36 +29,27 @@
               id="dumbell" />
             <div class="card-block">
               <h4 class="card-title">
-                <span id="login" class="selected">Login</span>
-                <span class="middle-push"></span>
-                <span id="register" class="faded-out">Register</span>
+                <span id="login" class="selected  non-selectable">Password Reset</span>
               </h4>
             </div>
-            <form id="custom-form" action="/login" method="post">
-              <% if(error && error.length > 0){ %>
-              <div class="alert alert-danger" role="alert">
-                <%= error %>
-              </div>
-              <% } %>
-              <% if(success && success.length > 0){ %>
-              <div class="alert alert-success" role="alert">
-                <%= success %>
-              </div>
-              <% } %>
+            <form id="custom-form" action="/" method="post">
               <div class="form-group">
                 <input type="text" class="form-control" id="username" name="username" placeholder="&#xf007; Username"
-                  style="font-family: Arial, FontAwesome;" />
+                  style="font-family: Arial, FontAwesome;" required/>
+              </div>
+              <div class="form-group">
+                <input type="email" class="form-control" id="email" name="email"
+                  placeholder="&#xf003; Email address" style="font-family: Arial, FontAwesome;" required/>
               </div>
               <div class="form-group">
                 <input type="password" class="form-control" id="password" name="password"
-                  placeholder="&#xf023; Password" style="font-family: Arial, FontAwesome;" />
+                  placeholder="&#xf023; Password" style="font-family: Arial, FontAwesome;" required/>
               </div>
+              <div class="form-group">
+                <input type="password" class="form-control" id="ConfirmPassword" placeholder="&#xf084; Confirm password" name="passwordCheck" style="font-family: Arial, FontAwesome;" required /></div>
               <button class="btn btn-dark">
                 Submit
               </button>
-              <div id="reset-link">
-                <a href="/reset">Change password / Forgotten password</a>
-              </div>
             </form>
           </div>
         </div>

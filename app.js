@@ -64,9 +64,11 @@ passport.deserializeUser(User.deserializeUser());
 const weightsRoutes = require("./routes/weights");
 const indexRoutes = require("./routes/index"); // require the index routes
 const profileRoutes = require("./routes/profile");
+const resetRoutes = require("./routes/reset");
 app.use(weightsRoutes);
 app.use(indexRoutes);
 app.use(profileRoutes);
+app.use(resetRoutes);
 
 // required for server to listen on port 3000 - server always has to listen to something!
 app.listen(process.env.PORT || 3000, function () {

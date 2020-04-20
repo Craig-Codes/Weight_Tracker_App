@@ -5,7 +5,7 @@ const User = require("../models/user");
 const Weight = require("../models/weights");
 const moment = require('moment');
 const methodOverride = require("method-override");
-flash = require("connect-flash");
+const flash = require("connect-flash");
 
 //Route new weights are posted to. Adds the weight to the db then redirect back to profile
 router.post("/profile", middleware.isLoggedIn, function (req, res) {

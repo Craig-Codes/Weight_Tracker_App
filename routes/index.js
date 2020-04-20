@@ -13,6 +13,7 @@ router.post("/register", function (req, res) {
   // Create new user object then pass into register function
   let newUser = new User({
     username: req.body.username,
+    email: req.body.email,
     age: req.body.age,
     gender: req.body.gender,
     heightFt: req.body.heightFt,
@@ -121,12 +122,6 @@ router.get("/profile", middleware.isLoggedIn, function (req, res) {
     res.render("profile", { currentUser: req.user, bmi: bmi, color: color, weights: revArr }); // pass variables into template
   });
 });
-
-//NEW Route
-router.get("/profile/new", function (req, res) {
-  res.render("new", { currentUser: req.user });
-});
-
 
 // Root path - app landing page (Login / Register form)
 router.get("/", function (req, res) {
