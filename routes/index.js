@@ -10,10 +10,6 @@ const Weight = require("../models/weights");
 // AUTH ROUTES - Register
 // Post from the register form. handles Sign-up logic
 router.post("/register", function (req, res) {
-  if (req.body.password !== req.body.passwordCheck) {
-    return res.render("login_register");
-    console.log("password doesn't match");
-  }
   // Create new user object then pass into register function
   let newUser = new User({
     username: req.body.username,
@@ -25,12 +21,19 @@ router.post("/register", function (req, res) {
   });
   User.register(newUser, req.body.password, function (err, user) {
     if (err) {
-      console.log(err);
-      return res.redirect("/");
+      if (req.body.password !== req.body.passwordCheck) {
+        req.flash("error", "Error, ensure passwords match correctly!");
+        return res.redirect("/");
+      } else {
+        console.log(err);
+        req.flash("error", "Username already taken, please choose a different username!");
+        return res.redirect("/");
+      };
     }
     // Create new weight for the user, utilisng the Weights Schema
     Weight.create({ weight: req.body.weight, date: Date.now() }, function (err, newlyCreatedWeight) {
       if (err) {
+        req.flash("error", err);
         console.log(err);
       } else {
         newlyCreatedWeight.save(function (err) {
@@ -47,6 +50,7 @@ router.post("/register", function (req, res) {
                 console.log(err);
               }
               else {
+                req.flash("success", "You have successfully registered, Welcome!");
                 return res.redirect("/profile");
               }
             })
@@ -64,9 +68,11 @@ router.post(
   passport.authenticate("local", {
     successRedirect: "/profile", //Throw in an error message saying user name or p/w incorrect
     failureRedirect: "/",
+    failureFlash: true,
+    failureFlash: 'Invalid username or password!'
   }),
   function (req, res) {
-    console.log("logged in");
+
     res.redirect("/profile");
   }
 );
@@ -78,6 +84,7 @@ router.get("/test", function (req, res) {
 // LOGOUT ROUTE
 router.get("/logout", function (req, res) {
   req.logout();
+  req.flash("success", "Logged out successfully!")
   res.redirect("/");
 });
 

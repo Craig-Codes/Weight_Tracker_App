@@ -5,6 +5,7 @@ const User = require("../models/user");
 const Weight = require("../models/weights");
 const moment = require('moment');
 const methodOverride = require("method-override");
+flash = require("connect-flash");
 
 //Route new weights are posted to. Adds the weight to the db then redirect back to profile
 router.post("/profile", middleware.isLoggedIn, function (req, res) {
@@ -21,6 +22,7 @@ router.post("/profile", middleware.isLoggedIn, function (req, res) {
                 newlyCreatedWeight.save();
                 user.weights.push(newlyCreatedWeight)
                 user.save();
+                req.flash("success", "New weight successfully added!");
                 res.redirect("/profile");
             }
         });
@@ -82,7 +84,7 @@ router.put("/profile/weights/:id", middleware.isLoggedIn, function (req, res) {
         if (err) {
             res.redirect("back");
         } else {
-            // FLASH WEIGHT UPDATED
+            req.flash("success", "Weight successfully updated!");
             res.redirect("/profile");
         }
     })
@@ -108,14 +110,14 @@ router.delete("/profile/weights/:id", middleware.isLoggedIn, function (req, res)
                     if (err) {
                         res.redirect("back");
                     } else {
-                        // FLASH WEIGHT DELETED
+                        req.flash("error", "Weight has been deleted!");
                         res.redirect("/profile");
                     }
                 });
             });
         }
         else {
-            // FLASH WEIGHT DELETED
+            req.flash("error", "Final weight cannot be deleted!");
             res.redirect("/profile");
         }
     })

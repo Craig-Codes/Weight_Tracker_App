@@ -8,7 +8,8 @@ const express = require("express"),
   methodOverride = require("method-override"),
   passportLocalMongoose = require("passport-local-mongoose"),
   User = require("./models/user"),
-  Weight = require("./models/weights");
+  Weight = require("./models/weights"),
+  flash = require("connect-flash");
 
 // DB SETUP
 mongoose.set("useUnifiedTopology", true);
@@ -28,12 +29,6 @@ mongoose
 
 mongoose.set("useFindAndModify", false);
 
-// APP SETUP
-app.use(bodyParser.urlencoded({ extended: true })); // tells app to use bodyParser for post requests, and sets some setting up
-app.use(methodOverride("_method")); // need for PUT Requests - hmtl forms only actually support get and post, but REST conventions require a PUT on update
-app.set("view engine", "ejs"); // This line means the express now expects ejs template files by default, so we dont need to add .ejs e.g landing.ejs can be called simply landing
-app.use(express.static(__dirname + "/public")); // adding custom stylesheet - use __dirname to ensure the directory is always correct incase it changes for whatever reason - this serves the style public directory, but you still need to link to it in the header file!
-
 // PASSPORT CONFIGURATION
 app.use(
   require("express-session")({
@@ -42,6 +37,21 @@ app.use(
     saveUninitialized: false,
   })
 );
+
+// APP SETUP
+app.use(bodyParser.urlencoded({ extended: true })); // tells app to use bodyParser for post requests, and sets some setting up
+app.use(methodOverride("_method")); // need for PUT Requests - hmtl forms only actually support get and post, but REST conventions require a PUT on update
+app.set("view engine", "ejs"); // This line means the express now expects ejs template files by default, so we dont need to add .ejs e.g landing.ejs can be called simply landing
+app.use(express.static(__dirname + "/public")); // adding custom stylesheet - use __dirname to ensure the directory is always correct incase it changes for whatever reason - this serves the style public directory, but you still need to link to it in the header file!
+app.use(flash()); // Tells app to use flash for flash messages
+
+//middleware passing the currentUser variable in all templates 
+app.use(function (req, res, next) {
+  res.locals.currentUser = req.user;
+  res.locals.error = req.flash("error"); // passes the 'message' varaible into every template... necessary as flash messages are in the header of every template so avoids message is undefined errors
+  res.locals.success = req.flash("success")
+  next(); // need to move middlewear on
+});
 
 app.use(passport.initialize()); // tells node to use passport
 app.use(passport.session()); // tells node to use passport
@@ -57,14 +67,6 @@ const profileRoutes = require("./routes/profile");
 app.use(weightsRoutes);
 app.use(indexRoutes);
 app.use(profileRoutes);
-
-//middleware passing the currentUser variable in all templates 
-app.use(function (req, res, next) {
-  res.locals.currentUser = req.user;
-  //res.locals.error = req.flash("error"); // passes the 'message' varaible into every template... necessary as flash messages are in the header of every template so avoids message is undefined errors
-  //res.locals.success = req.flash("success")
-  next(); // need to move middlewear on
-});
 
 // required for server to listen on port 3000 - server always has to listen to something!
 app.listen(process.env.PORT || 3000, function () {
