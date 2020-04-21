@@ -32,7 +32,7 @@ mongoose.set("useFindAndModify", false);
 // PASSPORT CONFIGURATION
 app.use(
   require("express-session")({
-    secret: process.env.SECRET, // DELETE PHRASE!!!!
+    secret: "NoPainNoGain GetToTheChoppa", // DELETE PHRASE!!!!
     resave: false, // have to add these two options
     saveUninitialized: false,
   })
