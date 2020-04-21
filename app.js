@@ -13,7 +13,7 @@ const express = require("express"),
 
 // DB SETUP
 mongoose.set("useUnifiedTopology", true);
-const url = process.env.MONGOURL; // Use enviroment variable on Heroku, local db for local development
+const url = "mongodb+srv://Craig:Cool2003!@cluster0-aqejs.mongodb.net/test?retryWrites=true&w=majority"; // Use enviroment variable on Heroku, local db for local development
 mongoose
   .connect(url, {
     //created an environmental variable... if on goorm, run local db, if on heroku run production db. To setup on Heroku go into app on heroku, settings, config vars. Then add the name of the variable, so DATABASEURL and make it equal the full url string with password. Also keeps password out of files and hidden
