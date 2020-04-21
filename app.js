@@ -13,7 +13,7 @@ const express = require("express"),
 
 // DB SETUP
 mongoose.set("useUnifiedTopology", true);
-const url = process.env.MONGODB_URI || "mongodb://localhost/weight_tracker"; // Use enviroment variable on Heroku, local db for local development
+const url = process.env.MONGODB_URI; // Use enviroment variable on Heroku, local db for local development
 mongoose
   .connect(url, {
     //created an environmental variable... if on goorm, run local db, if on heroku run production db. To setup on Heroku go into app on heroku, settings, config vars. Then add the name of the variable, so DATABASEURL and make it equal the full url string with password. Also keeps password out of files and hidden
@@ -32,7 +32,7 @@ mongoose.set("useFindAndModify", false);
 // PASSPORT CONFIGURATION
 app.use(
   require("express-session")({
-    secret: process.env.SECRET || "NoPainNoGain GetToTheChoppa", // DELETE PHRASE!!!!
+    secret: process.env.SECRET, // DELETE PHRASE!!!!
     resave: false, // have to add these two options
     saveUninitialized: false,
   })
@@ -70,9 +70,9 @@ app.use(indexRoutes);
 app.use(profileRoutes);
 app.use(resetRoutes);
 
-// required for server to listen on port 3000 - server always has to listen to something!
+// required for server to listen on port 3000 for production and Heroku for deployment - server always has to listen to something!
 app.listen(process.env.PORT || 3000, function () {
   console.log(
-    "Weight Tracker Server has started - Server listening on port 3000"
+    "Weight Tracker Server has started"
   );
 });
