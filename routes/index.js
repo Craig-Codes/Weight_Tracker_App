@@ -96,6 +96,8 @@ router.get("/profile", middleware.isLoggedIn, function (req, res) {
     let weightsArray = [];
     let resultsArray = [];
     let revArray = [];
+    let chartWeight = [];
+    let chartDate = [];
     if (err) {
       console.log(err);
       return res.redirect("back");
@@ -108,8 +110,12 @@ router.get("/profile", middleware.isLoggedIn, function (req, res) {
         weight: entry.weight,
         date: moment(entry.date).format("lll") // using moment.js to format date output
       };
+      let chartWeightObjectToPush = entry.weight;
+      let chartDateObjectToPush = moment(entry.date).format("DD/MM/YY");
       // pass the formatted object into a new array, storing all found objects correctly formatted
       weightsArray.push(objectToPush);
+      chartWeight.push(chartWeightObjectToPush);
+      chartDate.push(chartDateObjectToPush);
     })
     // Reverse the array so that the most recent entries become the first entries, allowing a for loop to be used in the template to display 5 most recent weights
     revArr = weightsArray.reverse();
@@ -119,7 +125,9 @@ router.get("/profile", middleware.isLoggedIn, function (req, res) {
     // function expressions used to calculate the BMI, and to control BMI output
     let bmi = profileFunctions.bmi(firstWeight, req.user.heightFt, req.user.heightIn); // send user details to BMI calc function
     let color = profileFunctions.bmiColor(bmi);
-    res.render("profile", { currentUser: req.user, bmi: bmi, color: color, weights: revArr }); // pass variables into template
+    console.log("chartDate==== ", chartDate);
+    console.log(chartWeight);
+    res.render("profile", { currentUser: req.user, bmi: bmi, color: color, weights: revArr, chartDate: chartDate, chartWeight: chartWeight }); // pass variables into template
   });
 });
 

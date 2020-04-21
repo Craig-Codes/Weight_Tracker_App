@@ -44,7 +44,7 @@
         <div class="row">
           <div class="col-5">
 
-            <div class="circleBase contact-circle" style="background-color: <%=color%>;">
+            <div class="circleBase contact-circle" style="background-color: <%=color%>;" id="bmiColor">
               <div id="bmiScore">
                 <%=bmi%>
               </div>
@@ -66,14 +66,57 @@
 
     </div>
     <div class="col-md-12">
-      <div class="raised-block">
-        <h3>Graph</h3>
-        <p>you are this old gender: <%=currentUser.gender%></p>
-        <p>your weight is: <%=currentUser.weight%></p>
-        your height is: <%=currentUser.heightFt%>'<%=currentUser.heightIn%>lbs
+      <div class="raised-block  chart-container" id="chartDate" data-date="<%-chartDate %>">
+        <h3 id="chartWeight" data-weight="<%- chartWeight %>">Weight Over Time</h3>
+        <div style="height: 380px; width: 100%">
+          <canvas id="myChart"></canvas>
+        </div>
       </div>
     </div>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  <script>
+    let myChart = document.getElementById('myChart').getContext('2d');
+
+    // Global Options
+    Chart.defaults.global.defaultFontFamily = 'Lato'; // set chart font to Lato
+
+    // Get JS varaibles into ejs
+    let bmiColour = document.getElementById('bmiColor').style.backgroundColor;
+    let chartWeight = document.getElementById('chartWeight').dataset.weight
+    let chartDate = document.getElementById('chartDate').dataset.date;
+    // Make ejs variables back to arrays
+    let arrWeight = chartWeight.split(','); // split string on comma
+    let arrDate = chartDate.split(',');
+    console.log(arrDate);
+    console.log(arrWeight);
+
+    //Build Chart
+    let chart = new Chart(myChart, {
+      // The type of chart we want to create
+      type: 'line',
+
+      // The data for our dataset
+      data: {
+        labels: arrDate, // array of dates
+        datasets: [{
+          label: 'lbs',
+          data: arrWeight, // array of weights
+          backgroundColor: bmiColour,
+          borderColor: 'white',
+        }]
+      },
+
+      // Configuration options go here
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+          display: false,
+        }
+      }
+    });
+  </script>
 </div>
 
 <%- include("./partials/footer") %>

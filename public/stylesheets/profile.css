@@ -20,7 +20,7 @@ h3{
 }
 
 .container {
-  padding-top: 30px;
+  padding-top: 15px;
 }
 
 .fa {
@@ -59,6 +59,8 @@ h3{
   transition: 0.2s ease-out;
   -webkit-transition: 0.2s ease-out;
   -moz-transition: 0.2s ease-out;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .raised-block:hover,
@@ -77,6 +79,10 @@ h3{
   transform: scale(1.02);
 }
 
+.chart-container{
+  height: 450px;
+}
+
 #list{
   padding: 0;
 }
@@ -86,11 +92,6 @@ h3{
 }
 
 
-@media (max-width: 33.9em) {
-  .raised-block {
-    margin-left: -0.625rem;
-  }
-}
 
 .fa-sign-out {
   margin-top: 7px;
@@ -112,7 +113,7 @@ h3{
   text-align: center;
   color: white;
   font-weight: bolder;
-  font-size: 3rem;
+  font-size: 2.2rem;
 }
 
 .circleBase {
@@ -143,6 +144,10 @@ h3{
 .col-5{
   padding-right:0;
   padding-left:0;
+}
+
+.col{
+  background-color: red;
 }
 
 button{
@@ -217,4 +222,13 @@ animation: colorSwap 0.2 ease-in;
 
 #bold{
  font-weight: bold;
+}
+
+.alert{
+  margin-bottom: 0;
+}
+
+.container-alert{
+  padding: 15px;
+  padding-bottom: 0;
 }
