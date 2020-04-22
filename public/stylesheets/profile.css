@@ -40,6 +40,9 @@ h4{
   background-color: rgba(180, 21, 21, 0);
   border: none;
   font-size: 1rem;
+  padding-left: 3px;
+  padding-right: 5px;
+
 }
 
 .trash-can:hover{
@@ -229,6 +232,7 @@ animation: colorSwap 0.2 ease-in;
 
 #bold{
  font-weight: bold;
+ margin-left: 5px;
 }
 
 .alert{
