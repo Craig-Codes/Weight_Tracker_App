@@ -67,9 +67,9 @@ const indexRoutes = require("./routes/index"); // require the index routes
 const profileRoutes = require("./routes/profile");
 const resetRoutes = require("./routes/reset");
 app.use(weightsRoutes);
-app.use(indexRoutes);
 app.use(profileRoutes);
 app.use(resetRoutes);
+app.use(indexRoutes);
 
 // required for server to listen on port 3000 for production and Heroku for deployment - server always has to listen to something!
 app.listen(process.env.PORT || 3000, function () {
