@@ -16,7 +16,7 @@
         </div>
         <ul class="weights-list">
           <% for(var i=0; i<5; i++) {%>
-          <% if(typeof weights[i] == "undefined"){ %><p> Add more weights to populate the list</p><%break } else{%>
+          <% if(typeof weights[i] == "undefined"){ break } else{%>
           <li class="weights-list-item"><span id="bold"><%= JSON.stringify(weights[i].weight) %>lbs</span><span
               id="muted"> on
               <%= JSON.parse(JSON.stringify(weights[i].date)) %></span>

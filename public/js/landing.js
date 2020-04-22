@@ -30,7 +30,7 @@ loginBtn.addEventListener("click", () => {
     '<div class="form-group">' +
     '<input type="password" class="form-control" id="InputPassword" placeholder="&#xf023; Password" style="font-family: Arial, FontAwesome;" /></div>' +
     '<button type="submit" class="btn btn-dark">Sign In</button>' +
-    '<div id="reset-link"><a href="/reset">Change password / Forgotten password</a></div>';
+    '<div id="reset-link"><a href="/reset">Reset password?</a></div>';
 });
 
 registerBtn.addEventListener("click", () => {
@@ -53,7 +53,7 @@ registerBtn.addEventListener("click", () => {
     '<div class="form-group">' +
     '<input type="email" class="form-control" id="email" placeholder="&#xf003; Email address" name="email" style="font-family: Arial, FontAwesome;" required /></div>' +
     '<div class="form-group">' +
-    '<input type="number" min="18" max="99" class="form-control" id="InputAge" placeholder="&#xf073; Age" name="age" style="font-family: Arial, FontAwesome;"  required/></div>' +
+    '<input type="number" min="18" max="99" class="form-control" id="InputAge" placeholder="&#xf073; Age in years" name="age" style="font-family: Arial, FontAwesome;"  required/></div>' +
     '<div class="form-group">' +
     '<label for="male">Male</label>' +
     '<input type="radio" id="male" class="male" name="gender" value="male" required>' +
@@ -61,11 +61,11 @@ registerBtn.addEventListener("click", () => {
     '<input type="radio" id="female" name="gender" value="female"></div>' +
     '<div class="form-group">' +
     '<label for="feet" class="foot">Foot:</label>' +
-    '<input type="number" id="InputFoot" name="heightFt" min="0" max="7" required>' +
+    '<input type="number" id="InputFoot" name="heightFt" min="3" max="7" required>' +
     '<label for="inches" class="inches">Inches:</label>' +
     '<input type="number" id="InputInches" name="heightIn" min="0" max="11" required></div>' +
     '<div class="form-group">' +
     '<label for="lbs" class="lbs">Lbs:</label>' +
-    '<input type="number" id="InputLbs" name="weight" min="1" max="1000" step=".1" required></div>' +
+    '<input type="number" id="InputLbs" name="weight" min="1" max="999" step=".1" required></div>' +
     '<button type="submit" class="btn btn-dark">Sign Up</button></form>';
 });

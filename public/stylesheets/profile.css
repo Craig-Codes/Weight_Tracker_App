@@ -19,12 +19,74 @@ h4{
   padding: 0 16px;
 }
 
+/* NAVBAR ANIMATION */
+.icon-bar {
+	width: 26.2px; 
+	height: 3px;
+	background-color: white;
+	display: block;
+	transition: all 0.2s;
+	margin-top: 4px
+}
+
+.navbar-toggler {
+  border: none;
+  background: transparent !important;
+}
+
+.navbar-toggler .top-bar {
+  transform: rotate(45deg);
+  transform-origin: 10% 10%;
+}
+
+.navbar-toggler .middle-bar {
+  opacity: 0;
+}
+
+.navbar-toggler .bottom-bar {
+  transform: rotate(-45deg);
+  transform-origin: 10% 90%;
+}
+
+.navbar-toggler.collapsed .top-bar {
+  transform: rotate(0);
+}
+
+.navbar-toggler.collapsed .middle-bar {
+  opacity: 1;
+}
+
+.navbar-toggler.collapsed .bottom-bar {
+  transform: rotate(0);
+}
+
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* END OF BURGER ANIMATION */
+
 .container {
   padding-top: 15px;
 }
 
 #nav-container{
   padding-top: 0;
+}
+
+.navbar-dark .navbar-brand{
+  font-size: 1.5rem;
+}
+
+.navbar-collapse{
+  margin-top: 10px;
+}
+
+.show-on-md{
+  display: none;
 }
 
 #sign-out{
@@ -308,4 +370,24 @@ animation: colorSwap 0.2 ease-in;
     margin:auto;
     margin-top: 5vh;
   }
+}
+
+/* NAVBAR EXPAND SETTINGS */
+@media (max-width: 767px) {
+  .show-on-md{
+    display: inline;
+    font-size: 1.2em;
+  }
+   .nav-link .fa{
+     font-size: 1.2em;
+   }
+
+   .nav-item{
+     margin-bottom: 10px;
+   }
+
+   .nav-item button{
+     margin-left: 0;
+     margin-top: 5px;
+   }
 }

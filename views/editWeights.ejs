@@ -5,17 +5,17 @@
     <div class="row text-center">
         <div class="col-12">
             <div class="block">
-                <h3>Edit weight</h3>
+                <h3>Edit Weight</h3>
 
                 <div>
-                    <p>submitted <%=weight.date %></p>
+                    <p>Submitted <%=weight.date %></p>
                 </div>
 
                 <form class="ui form" action="/profile/weights/<%=weight._id%>?_method=PUT" method="POST">
                     <!-- PUT / DELTE request doesnt work in HTML5 forms!! we ned to add in ?_method=PUT and use method overide package in express to get around this. Could just send to a different route, but the  it wouldnt follow REST convention. HMTL forms only support get or post requests so most frameworks ahve. todeal with this!-->
                     <div class="field">
                         <label>Weight in lbs:</label>
-                        <input id="update-box" type="number" name="updatedWeight" min="1" max="1000" step=".1"
+                        <input id="update-box" type="number" name="updatedWeight" min="1" max="999" step=".1"
                             value="<%=weight.weight%>">
                     </div>
                     <input class="btn btn-outline-dark" type="submit" value="Update">
