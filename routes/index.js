@@ -75,7 +75,8 @@ router.post(
   function (req, res) {
 
     res.redirect("/profile");
-  }
+  },
+  //middleware.isLoggedIn
 );
 
 router.get("/test", function (req, res) {
@@ -134,6 +135,11 @@ router.get("/profile", middleware.isLoggedIn, function (req, res) {
 // Root path - app landing page (Login / Register form)
 router.get("/", function (req, res) {
   res.render("login_register"); // render the landing.ejs page. Always put ejs files inside the View directory as this is where express looks!
+});
+
+// Default Route always returns back to the login screen
+router.get('*', function (req, res) {
+  res.redirect('/');
 });
 
 module.exports = router; // export the router paths

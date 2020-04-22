@@ -18,31 +18,34 @@
 <body>
   <nav class="navbar navbar-expand navbar-dark bg-dark">
     <!-- add in navbar-expand-sm for burger menu if needed-->
-    <a class="navbar-brand mb-0 h1" href="/profile"><i class="fa fa-<%=currentUser.gender%>"
-        aria-hidden="true"></i>&ensp;
-      Hello <%=currentUser.username%></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
-      aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="https://ca-gym-finder.netlify.com/" target="_blank">
-            <button type="button" class="btn btn-outline-light">
-              Local Gyms
-            </button>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/profile/edit">
-            <i class="fa fa-cog" aria-hidden="true"></i></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/logout">
-            <i class="fa fa-sign-out" aria-hidden="true"></i></a>
-        </li>
-      </ul>
+    <div class="container" id="nav-container">
+      <a class="navbar-brand mb-0 h1" href="/profile"><i class="fa fa-<%=currentUser.gender%>"
+          aria-hidden="true"></i>&ensp;
+        <% str = currentUser.username%>
+        <%=str.substring(0, 8)%></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+        aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="https://ca-gym-finder.netlify.com/" target="_blank">
+              <button type="button" class="btn btn-outline-light">
+                Local Gyms
+              </button>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/profile/edit">
+              <i class="fa fa-cog" aria-hidden="true"></i></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="sign-out" href="/logout">
+              <i class="fa fa-sign-out" aria-hidden="true"></i></a>
+          </li>
+        </ul>
+      </div>
     </div>
   </nav>
 </body>

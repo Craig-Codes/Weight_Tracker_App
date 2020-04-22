@@ -4,7 +4,7 @@
   <div class="row">
     <div class="col-md-6">
       <div class="raised-block" id="list">
-        <h3>Weight History</h3>
+        <h4>Weight History</h4>
         <div class="text-center">
           <form id="custom-form" action="/profile" method="post">
             <div class="form-group">
@@ -40,9 +40,9 @@
     </div>
     <div class="col-md-6">
       <div class="raised-block">
-        <h3>Body Mass Index</h3>
+        <h4>Body Mass Index</h4>
         <div class="row">
-          <div class="col-5">
+          <div class="col-6" id="bmiCircle">
 
             <div class="circleBase contact-circle" style="background-color: <%=color%>;" id="bmiColor">
               <div id="bmiScore">
@@ -50,9 +50,9 @@
               </div>
             </div>
           </div>
-          <div class="col-7">
+          <div class="col-6" id="bmiText">
             <p>Less than 18.5 = Underweight<br>
-              Between 18.5 - 24.9 = Healthy Weight<br>
+              Between 18.5 - 24.9 = Healthy<br>
               Between 25 - 29.9 = Overweight<br>
               Over 30 = Obese</p>
             <div class="text-center">
@@ -67,8 +67,8 @@
     </div>
     <div class="col-md-12">
       <div class="raised-block  chart-container" id="chartDate" data-date="<%-chartDate %>">
-        <h3 id="chartWeight" data-weight="<%- chartWeight %>">Weight Over Time</h3>
-        <div style="height: 380px; width: 100%">
+        <h4 id="chartWeight" data-weight="<%- chartWeight %>">Weight Over Time</h4>
+        <div style="height: 390px; width: 100%">
           <canvas id="myChart"></canvas>
         </div>
       </div>

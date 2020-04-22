@@ -7,7 +7,7 @@ i {
   color: white;
 }
 
-h3{
+h4{
   padding-top: 10px;
 }
 
@@ -21,6 +21,14 @@ h3{
 
 .container {
   padding-top: 15px;
+}
+
+#nav-container{
+  padding-top: 0;
+}
+
+#sign-out{
+  padding-right: 0;
 }
 
 .fa {
@@ -87,7 +95,7 @@ h3{
   padding: 0;
 }
 
-#list h3{
+#list h4{
   padding-left: 0.625rem;;
 }
 
@@ -113,14 +121,14 @@ h3{
   text-align: center;
   color: white;
   font-weight: bolder;
-  font-size: 2.2rem;
+  font-size: 2.5rem;
 }
 
 .circleBase {
   border-radius: 50%;
   display: block;
   margin:auto;
-  margin-top: 3vh;
+  margin-top: 2.5vh;
 }
 
 .contact-circle {
@@ -131,17 +139,16 @@ h3{
   margin-left: 10%;
   
 }
-.col-6{
-  height: 230px;
 
-}
 
-.col-7{
+#bmiText{
   padding-left:0;
-  padding-top: 20px;
+  padding-top: 30px;
+  text-align: center;
+  margin-left: -15px;
 }
 
-.col-5{
+#bmiCircle{
   padding-right:0;
   padding-left:0;
 }
@@ -231,4 +238,70 @@ animation: colorSwap 0.2 ease-in;
 .container-alert{
   padding: 15px;
   padding-bottom: 0;
+}
+
+.form-group{
+  padding-top: 5px;
+  margin-bottom: 10px;
+}
+
+
+@media only screen and (max-width: 991px) {
+  #bmiText{
+    padding-left:0;
+    padding-top: 8px;
+    text-align: center;
+    margin-left: -11px;
+  }
+  .circleBase {
+    border-radius: 50%;
+    display: block;
+    margin:auto;
+    margin-top: 5vh;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  #bmiText{
+    padding-left:0;
+    padding-top: 30px;
+    text-align: center;
+    margin-left: -15px;
+  }
+  .circleBase {
+    border-radius: 50%;
+    display: block;
+    margin:auto;
+    margin-top: 3vh;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  #bmiText{
+    padding-left:0;
+    padding-top: 15px;
+    text-align: center;
+    margin-left: -15px;
+  }
+  .circleBase {
+    border-radius: 50%;
+    display: block;
+    margin:auto;
+    margin-top: 4vh;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  #bmiText{
+    padding-left:0;
+    padding-top: 8px;
+    text-align: center;
+    margin-left: -10px;
+  }
+  .circleBase {
+    border-radius: 50%;
+    display: block;
+    margin:auto;
+    margin-top: 5vh;
+  }
 }
