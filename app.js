@@ -13,8 +13,7 @@ const express = require("express"),
 
 // DB SETUP
 mongoose.set("useUnifiedTopology", true);
-let url = process.env.DATABASEURL;
-console.log("************", process.env.DATABASEURL);
+let url = process.env.DATABASEURL; // Environmental variable, which is different in VSCode and Heroku
 //"mongodb://localhost/weight_tracker";//"mongodb+srv://Craig:Cool2003!@cluster0-aqejs.mongodb.net/test?retryWrites=true&w=majority"; // Use enviroment variable on Heroku, local db for local development
 mongoose
   .connect(url, {
@@ -34,7 +33,7 @@ mongoose.set("useFindAndModify", false);
 // PASSPORT CONFIGURATION
 app.use(
   require("express-session")({
-    secret: "NoPainNoGain GetToTheChoppa", // DELETE PHRASE!!!!
+    secret: process.env.SECRET, // DELETE PHRASE!!!!
     resave: false, // have to add these two options
     saveUninitialized: false,
   })
