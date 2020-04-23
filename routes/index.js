@@ -1,16 +1,15 @@
-const express = require("express");
-const router = express.Router(); // new isntance of the express router... all routes are added to it, then its exported.
-const passport = require("passport");
-const User = require("../models/user");
-const profileFunctions = require("../public/js/profile");
-const middleware = require("../middleware"); // because the middleware file is called index.js, we dont need to explicityl put / index.js at the end as express will look here by default
-const moment = require('moment');
-const Weight = require("../models/weights");
+const express = require("express"),
+  router = express.Router(), // new isntance of the express router... all routes are added to it, then its exported.
+  passport = require("passport"),
+  profileFunctions = require("../public/js/profile"),
+  middleware = require("../middleware"), // because the middleware file is called index.js, we dont need to explicitly put / index.js at the end as express will look here by default
+  moment = require('moment'), // outputs date information nicely in different formats
+  User = require("../models/user"),
+  Weight = require("../models/weights");
 
-// AUTH ROUTES - Register
-// Post from the register form. handles Sign-up logic
+// AUTH ROUTES - Register - Post from the register form handles Sign-up logic
 router.post("/register", function (req, res) {
-  // Create new user object then pass into register function
+  // Create a new user object then pass into register function, provided by passport
   let newUser = new User({
     username: req.body.username,
     email: req.body.email,
@@ -20,13 +19,12 @@ router.post("/register", function (req, res) {
     heightIn: req.body.heightIn,
     weight: req.body.weight,
   });
-  User.register(newUser, req.body.password, function (err, user) {
-    if (err) {
+  User.register(newUser, req.body.password, function (err, user) { // password is taken as secont parameter so that it can be hashed and salted before storage in db
+    if (err) { // Check for any errors, ensuring passwords match and username isnt already taken
       if (req.body.password !== req.body.passwordCheck) {
         req.flash("error", "Error, ensure passwords match correctly!");
         return res.redirect("/");
       } else {
-        console.log(err);
         req.flash("error", "Username already taken, please choose a different username!");
         return res.redirect("/");
       };
@@ -34,17 +32,13 @@ router.post("/register", function (req, res) {
     // Create new weight for the user, utilisng the Weights Schema
     Weight.create({ weight: req.body.weight, date: Date.now() }, function (err, newlyCreatedWeight) {
       if (err) {
-        req.flash("error", err);
-        console.log(err);
+        req.flash("error", err)
       } else {
         newlyCreatedWeight.save(function (err) {
-          console.log("weight saved into user");
-          // Push new weight object into the users weights object array
+          // Push new weight object into the users weights object array creating the reference in the db
           user.weights.push(newlyCreatedWeight)
-          // Save the User object with the weight inside
+          // Save the User object with the weight inside, saving data into the db
           user.save(function (err) {
-            console.log("new user created!");
-            console.log("should render now");
             // Authenticate user so they are already signed in, saving the need to login straight away
             req.login(user, function (err) {
               if (err) {
@@ -65,40 +59,35 @@ router.post("/register", function (req, res) {
 // AUTH ROUTES - Login
 router.post(
   "/login",
-  // Authenticate using passport.js
+  // Authenticate using passport.js, using the local protocal
   passport.authenticate("local", {
-    successRedirect: "/profile", //Throw in an error message saying user name or p/w incorrect
+    successRedirect: "/profile",
     failureRedirect: "/",
     failureFlash: true,
-    failureFlash: 'Invalid username or password!'
+    failureFlash: 'Invalid username or password!' //Throw in an error message saying user name or p/w incorrect
   }),
   function (req, res) {
-
     res.redirect("/profile");
   },
-  //middleware.isLoggedIn
 );
-
-router.get("/test", function (req, res) {
-  res.send("reached test route");
-});
 
 // LOGOUT ROUTE
 router.get("/logout", function (req, res) {
-  req.logout();
+  req.logout(); // passport method, logging out the current user
   req.flash("success", "Logged out successfully!")
   res.redirect("/");
 });
 
-//INDEX Route -> gets user stats for BMI, and a list of the most recent 5 weights for the user
+//INDEX Route - gets user stats for BMI, a list of the most recent 5 weights for the user and renders the Graph with the data provided
 router.get("/profile", middleware.isLoggedIn, function (req, res) {
-  console.log("profile route hit");
+  // Find the current user, and use populate to get the Weights Schema data associated with that user
   User.findById(req.user.id).populate("weights").exec(function (err, foundUser) {
-    let weightsArray = [];
-    let resultsArray = [];
-    let revArray = [];
-    let chartWeight = [];
-    let chartDate = [];
+    let weightsArray = []; // stores all weights associated with the user
+    let resultsArray = []; // stores all weights correctly formatted
+    let revArray = []; // reverses the resultsArray for correct output
+    let chartWeight = []; // Stores Line Graph weight data
+    let chartDate = []; // Stores line Graph date data
+
     if (err) {
       console.log(err);
       return res.redirect("back");
@@ -120,14 +109,11 @@ router.get("/profile", middleware.isLoggedIn, function (req, res) {
     })
     // Reverse the array so that the most recent entries become the first entries, allowing a for loop to be used in the template to display 5 most recent weights
     revArr = weightsArray.reverse();
-    console.log("reverseArray ===== ", revArr);
-    //console.log("reverseArray ===== ", revArr[0].weight);
-    let firstWeight = revArr[0].weight;
+    let firstWeight = revArr[0].weight; // get the first weight, as the most recent to be used in bmi calculation
     // function expressions used to calculate the BMI, and to control BMI output
-    let bmi = profileFunctions.bmi(firstWeight, req.user.heightFt, req.user.heightIn); // send user details to BMI calc function
-    let color = profileFunctions.bmiColor(bmi);
-    console.log("chartDate==== ", chartDate);
-    console.log(chartWeight);
+    let bmi = profileFunctions.bmi(firstWeight, req.user.heightFt, req.user.heightIn); // Get BMI score
+    let color = profileFunctions.bmiColor(bmi); // Get BMI colour
+    // Pass variables into the template
     res.render("profile", { currentUser: req.user, bmi: bmi, color: color, weights: revArr, chartDate: chartDate, chartWeight: chartWeight }); // pass variables into template
   });
 });

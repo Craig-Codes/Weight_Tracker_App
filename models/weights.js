@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-//Embedded Schema
+//Embedded Schema, creating an array of weights, referenced to individual users
 let weightSchema = mongoose.Schema({
     weight: Number,
     date: Date,

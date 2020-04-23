@@ -11,16 +11,18 @@ function removeLoader() {
   });
 }
 
+// Connect to HTML elements
 const loginBtn = document.querySelector("#login");
 const registerBtn = document.querySelector("#register");
 const dumbellImg = document.querySelector("#dumbell");
 const myForm = document.querySelector("#custom-form");
 
+// When loginBtn is pressed, classes are added / removed to switch between Login and Register forms
 loginBtn.addEventListener("click", () => {
   dumbellImg.className = "card-img-top img-circle rounded-circle";
   registerBtn.className = "faded-out";
   loginBtn.className = "selected";
-  setTimeout(function () {
+  setTimeout(function () { // spin the dumbbell
     dumbellImg.className = "card-img-top img-circle rounded-circle dumbell";
   }, 100);
   myForm.action = "/login";
@@ -53,12 +55,13 @@ registerBtn.addEventListener("click", () => {
     '<div class="form-group">' +
     '<input type="email" class="form-control" id="email" placeholder="&#xf003; Email address" name="email" style="font-family: Arial, FontAwesome;" required /></div>' +
     '<div class="form-group">' +
-    '<input type="number" min="18" max="99" class="form-control" id="InputAge" placeholder="&#xf073; Age in years" name="age" style="font-family: Arial, FontAwesome;"  required/></div>' +
+    '<input type="number" min="18" max="99" class="form-control" id="InputAge" placeholder="&#xf1fd; Age in years" name="age" style="font-family: Arial, FontAwesome;"  required/></div>' +
     '<div class="form-group">' +
-    '<label for="male">Male</label>' +
-    '<input type="radio" id="male" class="male" name="gender" value="male" required>' +
-    '<label for="female" class="female">Female</label>' +
-    '<input type="radio" id="female" name="gender" value="female"></div>' +
+    '<select id="gender" name="gender" style="font-family: Arial, FontAwesome;" class="form-group form-control">' +
+    '<option value="placeholder" id="placeholder" disabled selected hidden>&nbsp;&#xf183;&#xf182; Gender</option>' +
+    '<option value="male">Male</option>' +
+    '<option value="female">Female</option>' +
+    '</select>' +
     '<div class="form-group">' +
     '<label for="feet" class="foot">Foot:</label>' +
     '<input type="number" id="InputFoot" name="heightFt" min="3" max="7" required>' +

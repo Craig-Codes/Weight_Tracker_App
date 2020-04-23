@@ -9,17 +9,33 @@
                 <form class="ui form" action="/profile?_method=PUT" method="POST">
                     <!-- PUT / DELTE request doesnt work in HTML5 forms!! we ned to add in ?_method=PUT and use method overide package in express to get around this. Could just send to a different route, but the  it wouldnt follow REST convention. HMTL forms only support get or post requests so most frameworks ahve. todeal with this!-->
                     <div class="form-group">
-                        <label for="email" class="email" style="font-family: Arial, FontAwesome;">&#xf003; Email address:</label>
-                        <input type="email" class="form-control" id="email" placeholder="&#xf003; Email address" name="email" style="font-family: Arial, FontAwesome;" value="<%=currentUser.email%>" required />
+                        <label for="email" class="email" style="font-family: Arial, FontAwesome;">&#xf003; Email
+                            address:</label>
+                        <input type="email" class="form-control" id="email" placeholder="&#xf003; Email address"
+                            name="email" style="font-family: Arial, FontAwesome;" value="<%=currentUser.email%>"
+                            required />
                     </div>
                     <div class="form-group">
-                        <label for="age" class="age" style="font-family: Arial, FontAwesome;">&#xf073; Age:</label>
-                        <input type="number" min="18" max="99" id="InputAge" value="<%= currentUser.age%>"
-                            name="age" required/>
+                        <label for="age" class="age" style="font-family: Arial, FontAwesome;">&#xf1fd; Age:</label>
+                        <input type="number" min="18" max="99" id="InputAge" value="<%= currentUser.age%>" name="age"
+                            required />
                     </div>
                     <div class="form-group">
+                        <label for="gender" class="gender" style="font-family: Arial, FontAwesome;">&#xf183;&#xf182;
+                            Gender:</label>
+                        <select id="gender" name="gender">
+                            <% if(currentUser.gender === "male"){ %>
+                            <option value="male" selected>Male</option>
+                            <option value="female">Female</option>
+                            <% } else { %>
+                            <option value="male">Male</option>
+                            <option value="female" selected>Female</option>
+                            <% } %>
+                        </select>
+                    </div>
+                    <div class="form-group last-item">
                         <label for="feet" class="foot">Foot:</label>
-                        <input type="number" id="InputFoot" name="heightFt" min="0" max="7"
+                        <input type="number" id="InputFoot" name="heightFt" min="4" max="7"
                             value="<%= currentUser.heightFt %>" required>
                         <label for="inches" class="inches">Inches:</label>
                         <input type="number" id="InputInches" name="heightIn" min="0" max="11"
@@ -29,4 +45,6 @@
                 </form>
             </div>
         </div>
-        <%- include("partials/footer") %>
+    </div>
+</div>
+<%- include("partials/footer") %>

@@ -1,18 +1,17 @@
-const express = require("express");
-const router = express.Router({ mergeParams: true }); // keeps req.params values
-const middleware = require("../middleware"); // because the middleware file is called index.js, we dont need to explicityl put / index.js at the end as express will look here by default
-const User = require("../models/user");
-const Weight = require("../models/weights");
-const moment = require('moment');
-const methodOverride = require("method-override");
-const flash = require("connect-flash");
+const express = require("express"),
+    router = express.Router({ mergeParams: true }), // keeps req.params values
+    middleware = require("../middleware"),
+    User = require("../models/user"),
+    Weight = require("../models/weights"),
+    moment = require('moment'),
+    methodOverride = require("method-override"),
+    flash = require("connect-flash");
 
 //Route new weights are posted to. Adds the weight to the db then redirect back to profile
 router.post("/profile", middleware.isLoggedIn, function (req, res) {
-    //find the User first, then create a new weight and push it to the user
+    //find the User first, then create a new weight and push it to the user to embed
     User.findById(req.user.id, function (err, user) {
         if (err) {
-            console.log(err);
             return res.redirect("/profile");
         }
         Weight.create({ weight: req.body.weight, date: Date.now() }, function (err, newlyCreatedWeight) {
@@ -32,9 +31,10 @@ router.post("/profile", middleware.isLoggedIn, function (req, res) {
 // Show route for ALL weights
 router.get("/profile/weights", middleware.isLoggedIn, function (req, res) {
     User.findById(req.user.id).populate("weights").exec(function (err, foundUser) {
-        let weightsArray = [];
-        let resultsArray = [];
-        let revArray = [];
+        let weightsArray = []; // stores all found weights
+        let resultsArray = []; // stores all found weights correctly formatted
+        let revArray = []; // reverses order of formatted array ready for template
+
         if (err) {
             console.log(err);
             return res.redirect("back");
@@ -53,32 +53,34 @@ router.get("/profile/weights", middleware.isLoggedIn, function (req, res) {
         // Reverse the array so that the most recent entries become the first entries
         revArr = weightsArray.reverse();
         console.log("reverseArray ===== ", revArr);
-        res.render("weights", { currentUser: req.user, weights: revArr }); // pass variables into template
+        res.render("weights", { currentUser: req.user, weights: revArr });
     });
 });
 
 // EDIT Route for individual weights
 router.get("/profile/weights/:id/edit", middleware.isLoggedIn, function (req, res) {
-    // Find the user first
     User.findById(req.user.id).populate("weights").exec(function (err, foundUser) {
         if (err) {
-            //req.flash("error", "No campground found");
             return res.redirect("back");
         }
-        // Find the individual weight
+        // Find the individual weight based on the :id of the request
         Weight.findById(req.params.id, function (err, foundWeight) {
             if (err) {
                 res.redirect("back");
             }
             else {
-                console.log("foundWeight =======", foundWeight);
-                res.render("editWeights", { currentUser: req.user, weight: foundWeight });;
+                // correctly format the found data, using moment.js to control how date is output
+                let weightObject = {
+                    weight: foundWeight.weight,
+                    date: moment(foundWeight.date).format('LLLL'),
+                };
+                res.render("editWeights", { currentUser: req.user, weight: weightObject });;
             };
         });
     });
 });
 
-// UPDATE ROUTE
+// UPDATE ROUTE - use findByIdAndUpdate mongoose method to easily update the new weight
 router.put("/profile/weights/:id", middleware.isLoggedIn, function (req, res) {
     Weight.findByIdAndUpdate({ _id: req.params.id }, { weight: req.body.updatedWeight }, function (err, newWeight) {
         if (err) {
@@ -90,16 +92,15 @@ router.put("/profile/weights/:id", middleware.isLoggedIn, function (req, res) {
     })
 });
 
-//DESTROY ROUTE - Destroy from both db collections, ensuring we always have one weight to use for BMI calculation
+//DESTROY ROUTE - Destroy from both db collections (reference in User, and actual object in Weights), ensuring we always have one weight to use for BMI calculation
 router.delete("/profile/weights/:id", middleware.isLoggedIn, function (req, res) {
+    // find the user and populate to embed the Weights into the user object
     User.findById(req.user.id).populate("weight").exec(function (err, user) {
         if (err) {
             return console.log(err)
         }
-        if (user.weights.length > 1) {
-            console.log("user==== ", user);
-            console.log(user.weights.length);
-            user.weights.pull(req.params.id)
+        if (user.weights.length > 1) { // Ensure there is always 1 weight remaining - used to calculate BMI
+            user.weights.pull(req.params.id) // pull the weight matching the request id, then save
             user.save(function (err, updatedUser) {
                 if (err) {
                     return console.log(err)
@@ -116,7 +117,7 @@ router.delete("/profile/weights/:id", middleware.isLoggedIn, function (req, res)
                 });
             });
         }
-        else {
+        else { // If only one weight found, tell user it cannot be deleted
             req.flash("error", "Final weight cannot be deleted!");
             res.redirect("/profile");
         }

@@ -1,5 +1,6 @@
 <%- include("partials/header") %>
 <%- include("partials/flash") %>
+
 <link rel="stylesheet" href="/stylesheets/weightsShow.css" />
 <div class="container">
     <div class="row text-center">
@@ -11,9 +12,13 @@
                         <% for(var i=0; i<weights.length; i++) {%>
                         <% if(typeof weights[i] == "undefined"){ %><p> Add more weights to populate the list</p>
                         <%break } else{%>
-                        <li class="weights-list-item"><span
-                                id="bold"><%= JSON.stringify(weights[i].weight) %>lbs</span><span id="muted"> on
-                                <%= JSON.parse(JSON.stringify(weights[i].date)) %></span>
+                        <li class="weights-list-item">
+                            <span>
+                                id="bold"><%= JSON.stringify(weights[i].weight) %>lbs
+                            </span>
+                            <span id="muted"> on
+                                <%= JSON.parse(JSON.stringify(weights[i].date)) %>
+                            </span>
                             <a href="weights/<%= weights[i].id %>/edit"><i class="fa fa-pencil-square-o"
                                     aria-hidden="true"></i></a>
                             <form class="custom-btn" action="/profile/weights/<%= weights[i].id %>?_method=DELETE"
@@ -23,15 +28,12 @@
                             </form>
                             <% } %>
                             <% } %>
+                        </li>
                     </ul>
                 </div>
             </div>
-
         </div>
+    </div>
+</div>
 
-
-
-
-
-
-        <%- include("partials/footer") %>
+<%- include("partials/footer") %>
