@@ -9,10 +9,9 @@ const express = require("express"),
 
 //Route new weights are posted to. Adds the weight to the db then redirect back to profile
 router.post("/profile", middleware.isLoggedIn, function (req, res) {
-    //find the User first, then create a new weight and push it to the user
+    //find the User first, then create a new weight and push it to the user to embed
     User.findById(req.user.id, function (err, user) {
         if (err) {
-            console.log(err);
             return res.redirect("/profile");
         }
         Weight.create({ weight: req.body.weight, date: Date.now() }, function (err, newlyCreatedWeight) {
@@ -32,9 +31,10 @@ router.post("/profile", middleware.isLoggedIn, function (req, res) {
 // Show route for ALL weights
 router.get("/profile/weights", middleware.isLoggedIn, function (req, res) {
     User.findById(req.user.id).populate("weights").exec(function (err, foundUser) {
-        let weightsArray = [];
-        let resultsArray = [];
-        let revArray = [];
+        let weightsArray = []; // stores all found weights
+        let resultsArray = []; // stores all found weights correctly formatted
+        let revArray = []; // reverses order of formatted array ready for template
+
         if (err) {
             console.log(err);
             return res.redirect("back");
@@ -53,7 +53,7 @@ router.get("/profile/weights", middleware.isLoggedIn, function (req, res) {
         // Reverse the array so that the most recent entries become the first entries
         revArr = weightsArray.reverse();
         console.log("reverseArray ===== ", revArr);
-        res.render("weights", { currentUser: req.user, weights: revArr }); // pass variables into template
+        res.render("weights", { currentUser: req.user, weights: revArr });
     });
 });
 
