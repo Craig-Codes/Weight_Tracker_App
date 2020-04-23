@@ -71,6 +71,7 @@ router.get("/profile/weights/:id/edit", middleware.isLoggedIn, function (req, re
             else {
                 // correctly format the found data, using moment.js to control how date is output
                 let weightObject = {
+                    _id: foundWeight.id,
                     weight: foundWeight.weight,
                     date: moment(foundWeight.date).format('LLLL'),
                 };
@@ -80,7 +81,7 @@ router.get("/profile/weights/:id/edit", middleware.isLoggedIn, function (req, re
     });
 });
 
-// UPDATE ROUTE
+// UPDATE ROUTE - use findByIdAndUpdate mongoose method to easily update the new weight
 router.put("/profile/weights/:id", middleware.isLoggedIn, function (req, res) {
     Weight.findByIdAndUpdate({ _id: req.params.id }, { weight: req.body.updatedWeight }, function (err, newWeight) {
         if (err) {
@@ -92,16 +93,15 @@ router.put("/profile/weights/:id", middleware.isLoggedIn, function (req, res) {
     })
 });
 
-//DESTROY ROUTE - Destroy from both db collections, ensuring we always have one weight to use for BMI calculation
+//DESTROY ROUTE - Destroy from both db collections (reference in User, and actual object in Weights), ensuring we always have one weight to use for BMI calculation
 router.delete("/profile/weights/:id", middleware.isLoggedIn, function (req, res) {
+    // find the user and populate to embed the Weights into the user object
     User.findById(req.user.id).populate("weight").exec(function (err, user) {
         if (err) {
             return console.log(err)
         }
-        if (user.weights.length > 1) {
-            console.log("user==== ", user);
-            console.log(user.weights.length);
-            user.weights.pull(req.params.id)
+        if (user.weights.length > 1) { // Ensure there is always 1 weight remaining - used to calculate BMI
+            user.weights.pull(req.params.id) // pull the weight matching the request id, then save
             user.save(function (err, updatedUser) {
                 if (err) {
                     return console.log(err)
@@ -118,7 +118,7 @@ router.delete("/profile/weights/:id", middleware.isLoggedIn, function (req, res)
                 });
             });
         }
-        else {
+        else { // If only one weight found, tell user it cannot be deleted
             req.flash("error", "Final weight cannot be deleted!");
             res.redirect("/profile");
         }
