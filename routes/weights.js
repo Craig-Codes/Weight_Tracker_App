@@ -59,20 +59,22 @@ router.get("/profile/weights", middleware.isLoggedIn, function (req, res) {
 
 // EDIT Route for individual weights
 router.get("/profile/weights/:id/edit", middleware.isLoggedIn, function (req, res) {
-    // Find the user first
     User.findById(req.user.id).populate("weights").exec(function (err, foundUser) {
         if (err) {
-            //req.flash("error", "No campground found");
             return res.redirect("back");
         }
-        // Find the individual weight
+        // Find the individual weight based on the :id of the request
         Weight.findById(req.params.id, function (err, foundWeight) {
             if (err) {
                 res.redirect("back");
             }
             else {
-                console.log("foundWeight =======", foundWeight);
-                res.render("editWeights", { currentUser: req.user, weight: foundWeight });;
+                // correctly format the found data, using moment.js to control how date is output
+                let weightObject = {
+                    weight: foundWeight.weight,
+                    date: moment(foundWeight.date).format('LLLL'),
+                };
+                res.render("editWeights", { currentUser: req.user, weight: weightObject });;
             };
         });
     });
