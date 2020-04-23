@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true }); // keeps req.params values
-const middleware = require("../middleware");
+const middleware = require("../middleware"); // because the middleware file is called index.js, we dont need to explicityl put / index.js at the end as express will look here by default
 const User = require("../models/user");
 const Weight = require("../models/weights");
 const moment = require('moment');
@@ -71,13 +71,8 @@ router.get("/profile/weights/:id/edit", middleware.isLoggedIn, function (req, re
                 res.redirect("back");
             }
             else {
-                let objectToPush = {
-                    weight: foundWeight.weight,
-                    date: moment(foundWeight.date).format('LLLL'),
-                };
-
-                console.log("foundWeight =======", objectToPush);
-                res.render("editWeights", { currentUser: req.user, weight: objectToPush });;
+                console.log("foundWeight =======", foundWeight);
+                res.render("editWeights", { currentUser: req.user, weight: foundWeight });;
             };
         });
     });
