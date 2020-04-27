@@ -8,7 +8,7 @@ const express = require("express"),
   Weight = require("../models/weights");
 
 // AUTH ROUTES - Register - Post from the register form handles Sign-up logic
-router.post("/register", function (req, res) {
+router.post("/register", (req, res) => {
   // Create a new user object then pass into register function, provided by passport
   let newUser = new User({
     username: req.body.username,
@@ -19,7 +19,9 @@ router.post("/register", function (req, res) {
     heightIn: req.body.heightIn,
     weight: req.body.weight,
   });
-  User.register(newUser, req.body.password, function (err, user) { // password is taken as secont parameter so that it can be hashed and salted before storage in db
+
+  // Register the new user, after taking in the POST information to create the newUser object
+  User.register(newUser, req.body.password, (err, user) => { // password is taken as secont parameter so that it can be hashed and salted before storage in db
     if (err) { // Check for any errors, ensuring passwords match and username isnt already taken
       if (req.body.password !== req.body.passwordCheck) {
         req.flash("error", "Error, ensure passwords match correctly!");
@@ -30,22 +32,22 @@ router.post("/register", function (req, res) {
       };
     }
     // Create new weight for the user, utilisng the Weights Schema
-    Weight.create({ weight: req.body.weight, date: Date.now() }, function (err, newlyCreatedWeight) {
+    Weight.create({ weight: req.body.weight, date: Date.now() }, (err, newlyCreatedWeight) => {
       if (err) {
         req.flash("error", err)
       } else {
-        newlyCreatedWeight.save(function (err) {
+        newlyCreatedWeight.save((err) => {
           // Push new weight object into the users weights object array creating the reference in the db
           user.weights.push(newlyCreatedWeight)
           // Save the User object with the weight inside, saving data into the db
-          user.save(function (err) {
+          user.save((err) => {
             // Authenticate user so they are already signed in, saving the need to login straight away
             req.login(user, function (err) {
               if (err) {
                 console.log(err);
               }
               else {
-                req.flash("success", "You have successfully registered, Welcome!");
+                req.flash("success", `You have successfully registered ${req.body.username}, Welcome!`);
                 return res.redirect("/profile");
               }
             })
@@ -72,16 +74,16 @@ router.post(
 );
 
 // LOGOUT ROUTE
-router.get("/logout", function (req, res) {
+router.get("/logout", (req, res) => {
   req.logout(); // passport method, logging out the current user
   req.flash("success", "Logged out successfully!")
   res.redirect("/");
 });
 
 //INDEX Route - gets user stats for BMI, a list of the most recent 5 weights for the user and renders the Graph with the data provided
-router.get("/profile", middleware.isLoggedIn, function (req, res) {
+router.get("/profile", middleware.isLoggedIn, (req, res) => {
   // Find the current user, and use populate to get the Weights Schema data associated with that user
-  User.findById(req.user.id).populate("weights").exec(function (err, foundUser) {
+  User.findById(req.user.id).populate("weights").exec((err, foundUser) => {
     let weightsArray = []; // stores all weights associated with the user
     let resultsArray = []; // stores all weights correctly formatted
     let revArray = []; // reverses the resultsArray for correct output
@@ -94,7 +96,7 @@ router.get("/profile", middleware.isLoggedIn, function (req, res) {
     }
     resultsArray = foundUser.weights;
     // loops through the users weights object array, passing the results into an object
-    resultsArray.forEach(function (entry) {
+    resultsArray.forEach((entry) => {
       let objectToPush = {
         id: entry.id,
         weight: entry.weight,
@@ -119,12 +121,12 @@ router.get("/profile", middleware.isLoggedIn, function (req, res) {
 });
 
 // Root path - app landing page (Login / Register form)
-router.get("/", function (req, res) {
+router.get("/", (req, res) => {
   res.render("login_register"); // render the landing.ejs page. Always put ejs files inside the View directory as this is where express looks!
 });
 
 // Default Route always returns back to the login screen
-router.get('*', function (req, res) {
+router.get('*', (req, res) => {
   res.redirect('/');
 });
 

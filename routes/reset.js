@@ -3,13 +3,13 @@ const express = require("express"),
     User = require("../models/user");
 
 // RESET PASSWORD ROUTE
-router.get("/reset", function (req, res) {
+router.get("/reset", (req, res) => {
     res.render("reset");
 })
 
 // CHANGE PASSWORD ROUTE - check to ensure username and email address are correct, then ensure both passwords match before resetting
 router.post("/", function (req, res) {
-    User.findOne({ username: req.body.username }, function (err, user) {
+    User.findOne({ username: req.body.username }, (err, user) => {
         // Check to ensure username is in the db
         if (user == null) {
             return res.render("login_register", { "error": "No user by that name found!" });

@@ -6,13 +6,13 @@ const express = require("express"),
     flash = require("connect-flash");
 
 // PROFILE SHOW ROUTE - edit profile page
-router.get("/profile/edit", middleware.isLoggedIn, function (req, res) {
+router.get("/profile/edit", middleware.isLoggedIn, (req, res) => {
     // currentUser is used to pre-populate the fields for the user
     res.render("editProfile", { currentUser: req.user });
 });
 
 // PROFILE UPDATE ROUTE - update profile page
-router.put("/profile", middleware.isLoggedIn, function (req, res) {
+router.put("/profile", middleware.isLoggedIn, (req, res) => {
     User.findByIdAndUpdate({ _id: req.user.id }, { age: req.body.age, gender: req.body.gender, heightFt: req.body.heightFt, heightIn: req.body.heightIn, email: req.body.email },
         function (err, updatedUser) {
             if (err) {

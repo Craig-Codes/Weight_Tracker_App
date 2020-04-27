@@ -44,7 +44,7 @@ app.use(express.static(__dirname + "/public")); // adding custom stylesheet - us
 app.use(flash()); // Tells app to use flash for flash messages
 
 //middleware passing the currentUser variable in all templates 
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
   res.locals.currentUser = req.user;
   res.locals.error = req.flash("error"); // passes the 'message' variable into every template... necessary as flash messages are in the header of every template so avoids message is undefined errors
   res.locals.success = req.flash("success")
@@ -69,7 +69,7 @@ app.use(resetRoutes);
 app.use(indexRoutes); // the default route is in the index, so this needs to be loaded in last
 
 // required for server to listen on port 3000 for production and Heroku for deployment - server always has to listen to something!
-app.listen(process.env.PORT || 3000, function () {
+app.listen(process.env.PORT || 3000, () => {
   console.log(
     "Weight Tracker Server has started"
   );
