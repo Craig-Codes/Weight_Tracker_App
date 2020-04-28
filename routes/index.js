@@ -8,8 +8,8 @@ const express = require("express"),
   Weight = require("../models/weights");
 
 // AUTH ROUTES - Register - Post from the register form handles Sign-up logic
-router.post("/register", (req, res) => {
-  // Create a new user object then pass into register function, provided by passport
+router.post("/register", async (req, res) => {
+  // Create a new user object using form input, then pass into register function, provided by passport
   let newUser = new User({
     username: req.body.username,
     email: req.body.email,
@@ -20,42 +20,26 @@ router.post("/register", (req, res) => {
     weight: req.body.weight,
   });
 
-  // Register the new user, after taking in the POST information to create the newUser object
-  User.register(newUser, req.body.password, (err, user) => { // password is taken as secont parameter so that it can be hashed and salted before storage in db
-    if (err) { // Check for any errors, ensuring passwords match and username isnt already taken
-      if (req.body.password !== req.body.passwordCheck) {
-        req.flash("error", "Error, ensure passwords match correctly!");
-        return res.redirect("/");
-      } else {
-        req.flash("error", "Username already taken, please choose a different username!");
-        return res.redirect("/");
-      };
-    }
-    // Create new weight for the user, utilisng the Weights Schema
-    Weight.create({ weight: req.body.weight, date: Date.now() }, (err, newlyCreatedWeight) => {
-      if (err) {
-        req.flash("error", err)
-      } else {
-        newlyCreatedWeight.save((err) => {
-          // Push new weight object into the users weights object array creating the reference in the db
-          user.weights.push(newlyCreatedWeight)
-          // Save the User object with the weight inside, saving data into the db
-          user.save((err) => {
-            // Authenticate user so they are already signed in, saving the need to login straight away
-            req.login(user, function (err) {
-              if (err) {
-                console.log(err);
-              }
-              else {
-                req.flash("success", `You have successfully registered ${req.body.username}, Welcome!`);
-                return res.redirect("/profile");
-              }
-            })
-          });
-        });
-      }
+  if (req.body.password !== req.body.passwordCheck) { // Check to ensure passwords match, if not return to login screen
+    req.flash("error", "Error, ensure passwords match correctly!");
+    return res.redirect("/");
+  }
+  try {
+    const user = await User.register(newUser, req.body.password); // after user creation, await new weight creation
+    const newlyCreatedWeight = await Weight.create({ weight: req.body.weight, date: Date.now() });
+    newlyCreatedWeight.save(); // Push new weight object into the users weights object array creating the reference in the db
+    user.weights.push(newlyCreatedWeight)
+    user.save(); // Save the User object with the weight inside, saving data into the db
+    req.login(user, (err) => {
+      req.flash("success", `You have successfully registered ${req.body.username}, Welcome!`);
+      return res.redirect("/profile");
     });
-  });
+  }
+  catch (err) {
+    console.log(err);
+    req.flash("error", "Username already taken, please choose a different username!");
+    return res.redirect("/");
+  }
 });
 
 // AUTH ROUTES - Login
@@ -81,19 +65,16 @@ router.get("/logout", (req, res) => {
 });
 
 //INDEX Route - gets user stats for BMI, a list of the most recent 5 weights for the user and renders the Graph with the data provided
-router.get("/profile", middleware.isLoggedIn, (req, res) => {
+router.get("/profile", middleware.isLoggedIn, async (req, res) => {
   // Find the current user, and use populate to get the Weights Schema data associated with that user
-  User.findById(req.user.id).populate("weights").exec((err, foundUser) => {
+  try {
+    const foundUser = await User.findById(req.user.id).populate("weights").exec();
     let weightsArray = []; // stores all weights associated with the user
     let resultsArray = []; // stores all weights correctly formatted
     let revArray = []; // reverses the resultsArray for correct output
     let chartWeight = []; // Stores Line Graph weight data
     let chartDate = []; // Stores line Graph date data
 
-    if (err) {
-      console.log(err);
-      return res.redirect("back");
-    }
     resultsArray = foundUser.weights;
     // loops through the users weights object array, passing the results into an object
     resultsArray.forEach((entry) => {
@@ -117,7 +98,12 @@ router.get("/profile", middleware.isLoggedIn, (req, res) => {
     let color = profileFunctions.bmiColor(bmi); // Get BMI colour
     // Pass variables into the template
     res.render("profile", { currentUser: req.user, bmi: bmi, color: color, weights: revArr, chartDate: chartDate, chartWeight: chartWeight }); // pass variables into template
-  });
+  }
+  catch (err) {
+    console.log(err);
+    req.flash("error", "Unable to render user profile!");
+    return res.redirect("back");
+  }
 });
 
 // Root path - app landing page (Login / Register form)

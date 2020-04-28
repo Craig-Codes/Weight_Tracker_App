@@ -64,7 +64,7 @@ registerBtn.addEventListener("click", () => {
     '</select>' +
     '<div class="form-group">' +
     '<label for="feet" class="foot">Foot:</label>' +
-    '<input type="number" id="InputFoot" name="heightFt" min="3" max="7" required>' +
+    '<input type="number" id="InputFoot" name="heightFt" min="4" max="7" required>' +
     '<label for="inches" class="inches">Inches:</label>' +
     '<input type="number" id="InputInches" name="heightIn" min="0" max="11" required></div>' +
     '<div class="form-group">' +

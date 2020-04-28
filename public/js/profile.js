@@ -1,8 +1,16 @@
 const User = require("../../models/user");
 const express = require("express");
 const router = express.Router();
+const mongoose = require("mongoose");
 
 // External Script to calculate backend logic used to before rendering the profile page
+
+// Find a user by ID using Mongoose ODM
+exports.findUser = (userId) => {
+    User.findById(req.user.id, function (err, user) {
+        return user;
+    })
+}
 
 // Calculate BMI based on user input details
 function bmi(weight, heightFt, heightIn) {
