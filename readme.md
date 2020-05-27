@@ -16,3 +16,5 @@ I built this application using the following:
 *   MongoDB - utilising mongoose to interact with the database
 *   EJS - as the templating engine
 *   CSS - using the Bootstrap 4 framework
+
+To quickly view the app, login using username: Showcase password: password
